@@ -2,10 +2,12 @@ package co.clflushopt.glint.storage;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.google.protobuf.ByteString;
+
 public class MemoryStore implements Store {
 
     // Back this main memory store with a concurrent hashmap.
-    public final ConcurrentHashMap<String, String> store;
+    public final ConcurrentHashMap<ByteString, ByteString> store;
 
     public MemoryStore() {
         this.store = new ConcurrentHashMap<>();
@@ -16,12 +18,12 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public String get(String key) {
+    public ByteString get(ByteString key) {
         return this.store.get(key);
     }
 
     @Override
-    public String put(String key, String value) {
+    public ByteString put(ByteString key, ByteString value) {
         return this.store.put(key, value);
     }
 

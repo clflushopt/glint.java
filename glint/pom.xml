@@ -30,6 +30,11 @@
     <artifactId>guava</artifactId>
     <version>33.4.0-jre</version>
   </dependency>
+  <dependency>
+    <groupId>com.google.protobuf</groupId>
+    <artifactId>protobuf-java</artifactId>
+    <version>4.29.3</version>
+  </dependency>
     <dependency>
         <groupId>org.codehaus.janino</groupId>
         <artifactId>janino</artifactId>

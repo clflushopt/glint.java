@@ -1,5 +1,7 @@
 package co.clflushopt.glint.storage;
 
+import com.google.protobuf.ByteString;
+
 /**
  * Allows users to specify a data storage API oblivious to the underlying
  * storage model.
@@ -11,7 +13,7 @@ public interface Store {
      * @param key
      * @return
      */
-    public String get(String key);
+    public ByteString get(ByteString key);
 
     /**
      * Write a key, value pair to the store and returns the old value
@@ -21,5 +23,5 @@ public interface Store {
      * @param value
      * @return
      */
-    public String put(String key, String value);
+    public ByteString put(ByteString key, ByteString value);
 }
