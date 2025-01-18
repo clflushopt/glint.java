@@ -9,7 +9,7 @@ SQL queries into Java bytecode.
 
 Following in the tradition of the new movement of modular database architectures
 Glint has no catalog or data management; its only capability is turning SQL queries
-into Java code that is then compiled and executed; think Calcite not DataFusion.
+into Java code that is then compiled and executed; think Calcite not Spark.
 
 In order to make it usable, at least for tests and benchmark purposes, we did plug
 an Arrow compatible access API this way we can read parquet files that represent

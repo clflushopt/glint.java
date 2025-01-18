@@ -7,7 +7,7 @@ import com.google.protobuf.ByteString;
 public class MemoryStore implements Store {
 
     // Back this main memory store with a concurrent hashmap.
-    public final ConcurrentHashMap<ByteString, ByteString> store;
+    private final ConcurrentHashMap<ByteString, ByteString> store;
 
     public MemoryStore() {
         this.store = new ConcurrentHashMap<>();

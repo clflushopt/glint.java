@@ -31,6 +31,16 @@
     <version>33.4.0-jre</version>
   </dependency>
   <dependency>
+      <groupId>org.apache.arrow</groupId>
+      <artifactId>arrow-vector</artifactId>
+      <version>9.0.0</version>
+  </dependency>
+  <dependency>
+      <groupId>org.apache.arrow</groupId>
+      <artifactId>arrow-memory-netty</artifactId>
+      <version>9.0.0</version>
+  </dependency>
+  <dependency>
     <groupId>com.google.protobuf</groupId>
     <artifactId>protobuf-java</artifactId>
     <version>4.29.3</version>
@@ -61,8 +71,12 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        </plugin>
+          <version>3.0.0-M6</version>
+          <configuration>
+                  <argLine>--add-opens=java.base/java.util=ALL-UNNAMED</argLine>
+                  <argLine>--add-opens=java.base/java.nio=ALL-UNNAMED</argLine>
+          </configuration>
+          </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
@@ -87,4 +101,14 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.13.2</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>

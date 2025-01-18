@@ -90,4 +90,9 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+### TODO Files ###
+TODO.md
+TODO.rst
+TODO
+
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,visualstudiocode,gradle

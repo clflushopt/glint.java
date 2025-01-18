@@ -1,4 +1,17 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+    "java.test.config": {
+        "name": "ArrowMemoryCoreConfiguration",
+        "vmArgs": [
+            "--add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED"
+        ]
+    },
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable": "JDK_JAVA_OPTIONS",
+            "value": "--add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED"
+        }
+    ]
 }
