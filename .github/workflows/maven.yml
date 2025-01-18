@@ -16,20 +16,19 @@ on:
 
 jobs:
   build:
-
+    name: Build and Run Tests
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 17
+    - name: Set up JDK 21 (Temurin)
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file glint/pom.xml
-    - name: Run tests
+    - name: Run Tests
       run: mvn -B test --file glint/pom.xml
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
