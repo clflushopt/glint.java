@@ -15,7 +15,13 @@ import co.clflushopt.glint.types.Field;
 import co.clflushopt.glint.types.Schema;
 
 /**
- * CSV data source.
+ * Csv data source using the user provided schema; if the schema is not present
+ * then it is inferred.
+ * 
+ * Only the size i.e number of columns is properly inferred, the data type
+ * always defaults to `ArrowTypes.StringType` if the schema is absent. Field
+ * names are inferred from the header, if a header is not present then the field
+ * names will be `field_0...field_n`.
  */
 public class CsvDataSource {
     private final Schema schema;
@@ -25,8 +31,8 @@ public class CsvDataSource {
 
     private final Logger logger = Logger.getLogger(CsvDataSource.class.getName());
 
-    public CsvDataSource(String filename, Optional<Schema> schema, Boolean hasHeaders, Integer batchSize)
-            throws FileNotFoundException {
+    public CsvDataSource(String filename, Optional<Schema> schema, Boolean hasHeaders,
+            Integer batchSize) throws FileNotFoundException {
         this.filename = filename;
         this.hasHeaders = hasHeaders;
         this.batchSize = batchSize;
@@ -63,12 +69,11 @@ public class CsvDataSource {
         parser.stopParsing();
 
         if (hasHeaders) {
-            return new Schema(
-                    List.of(headers).stream().map(columnName -> new Field(columnName, ArrowTypes.StringType)).toList());
+            return new Schema(List.of(headers).stream()
+                    .map(columnName -> new Field(columnName, ArrowTypes.StringType)).toList());
         } else {
-            return new Schema(Streams
-                    .mapWithIndex(List.of(headers).stream(),
-                            (_field, index) -> new Field(String.format("field_%d", index), ArrowTypes.StringType))
+            return new Schema(Streams.mapWithIndex(List.of(headers).stream(), (_field,
+                    index) -> new Field(String.format("field_%d", index), ArrowTypes.StringType))
                     .toList());
         }
 

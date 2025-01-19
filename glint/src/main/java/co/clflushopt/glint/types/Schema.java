@@ -27,7 +27,8 @@ public class Schema {
      * @return `Schema`.
      */
     public Schema project(List<Integer> indices) {
-        var fields = indices.stream().map(index -> this.fields.get(index)).collect(Collectors.toList());
+        var fields = indices.stream().map(index -> this.fields.get(index))
+                .collect(Collectors.toList());
         return new Schema(fields);
     }
 
@@ -50,7 +51,8 @@ public class Schema {
      * @return `Schema` in Arrow format.
      */
     public org.apache.arrow.vector.types.pojo.Schema toArrow() {
-        var fields = this.fields.stream().map(field -> field.toArrow()).collect(Collectors.toList());
+        var fields = this.fields.stream().map(field -> field.toArrow())
+                .collect(Collectors.toList());
         var arrowSchema = new org.apache.arrow.vector.types.pojo.Schema(fields);
 
         return arrowSchema;

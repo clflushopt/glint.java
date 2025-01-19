@@ -32,8 +32,10 @@ public final class ArrowTypes {
     /**
      * Floating point numbers.
      */
-    public static final ArrowType FloatType = new ArrowType.FloatingPoint(FloatingPointPrecision.SINGLE);
-    public static final ArrowType DoubleType = new ArrowType.FloatingPoint(FloatingPointPrecision.DOUBLE);
+    public static final ArrowType FloatType = new ArrowType.FloatingPoint(
+            FloatingPointPrecision.SINGLE);
+    public static final ArrowType DoubleType = new ArrowType.FloatingPoint(
+            FloatingPointPrecision.DOUBLE);
 
     /**
      * Strings in UTF-8 encoding.
