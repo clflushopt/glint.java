@@ -30,5 +30,5 @@ public interface DataSource {
      * @param projection
      * @return `RecordBatch` with only requested projections.
      */
-    public List<RecordBatch> scan(List<String> projection);
+    public Iterable<RecordBatch> scan(List<String> projection);
 }

@@ -2,6 +2,7 @@ package co.clflushopt.glint.datasource;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import com.univocity.parsers.csv.CsvParserSettings;
 
 import co.clflushopt.glint.types.ArrowTypes;
 import co.clflushopt.glint.types.Field;
+import co.clflushopt.glint.types.RecordBatch;
 import co.clflushopt.glint.types.Schema;
 
 /**
@@ -23,7 +25,7 @@ import co.clflushopt.glint.types.Schema;
  * names are inferred from the header, if a header is not present then the field
  * names will be `field_0...field_n`.
  */
-public class CsvDataSource {
+public class CsvDataSource implements DataSource {
     private final Schema schema;
     private final String filename;
     private final Boolean hasHeaders;
@@ -45,14 +47,19 @@ public class CsvDataSource {
         }
     }
 
-    private Schema inferSchema() throws FileNotFoundException {
-        logger.info("Schema inference triggered");
-
+    private File open() throws FileNotFoundException {
         var file = new File(filename);
         if (!file.exists()) {
             logger.info("File was not found");
             throw new FileNotFoundException("file with name " + filename + " was not found");
         }
+        return file;
+    }
+
+    private Schema inferSchema() throws FileNotFoundException {
+        logger.info("Schema inference triggered");
+
+        var file = open();
 
         var parser = getCsvParser(getCsvDefaultSettings());
         parser.beginParsing(file);
@@ -70,11 +77,14 @@ public class CsvDataSource {
         parser.stopParsing();
 
         if (hasHeaders) {
-            return new Schema(List.of(headers).stream()
-                    .map(columnName -> new Field(columnName, ArrowTypes.StringType)).toList());
+            return new Schema(Streams.mapWithIndex(List.of(headers).stream(), (columnName,
+                    columnIndex) -> new Field(columnName, (int) columnIndex, ArrowTypes.StringType))
+                    .toList());
+
         } else {
-            return new Schema(Streams.mapWithIndex(List.of(headers).stream(), (_field,
-                    index) -> new Field(String.format("field_%d", index), ArrowTypes.StringType))
+            return new Schema(Streams.mapWithIndex(List.of(headers).stream(),
+                    (_field, index) -> new Field(String.format("field_%d", index), (int) index,
+                            ArrowTypes.StringType))
                     .toList());
         }
 
@@ -115,4 +125,32 @@ public class CsvDataSource {
         return logger;
     }
 
+    @Override
+    public Iterable<RecordBatch> scan(List<String> projection) {
+        try {
+            var file = this.open();
+            var schema = this.schema;
+            var settings = this.getCsvDefaultSettings();
+
+            if (!projection.isEmpty()) {
+                schema = this.schema.select(projection);
+                settings.selectFields(projection.toArray(new String[0]));
+            }
+            settings.setHeaderExtractionEnabled(hasHeaders);
+            if (!hasHeaders) {
+                settings.setHeaders(schema.getFields().stream().map(field -> field.name()).toList()
+                        .toArray(new String[0]));
+            }
+
+            var parser = getCsvParser(settings);
+            parser.beginParsing(file);
+            var format = parser.getDetectedFormat();
+            logger.info(String.format("Detected format with delimiter: %s and line separator: %s",
+                    format.getDelimiterString(), format.getLineSeparator()));
+
+            return new CsvReaderIterable(schema, parser, this.batchSize);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
 }

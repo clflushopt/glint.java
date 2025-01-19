@@ -8,7 +8,7 @@ import org.apache.arrow.vector.types.pojo.ArrowType;
  * Field is a metadata type used to qualify columns in the columnar format with
  * a name and data type.
  */
-public record Field(String name, ArrowType dataType) {
+public record Field(String name, int index, ArrowType dataType) {
 
     /**
      * Transform an internal `Field` type to Arrow Field type.

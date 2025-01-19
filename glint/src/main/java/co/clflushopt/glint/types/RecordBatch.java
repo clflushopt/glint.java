@@ -43,10 +43,19 @@ public class RecordBatch {
     /**
      * Returns the number of columns in the batch.
      * 
-     * @return `int..
+     * @return `int`.
      */
     public int getColumnSize() {
         return fields.size();
+    }
+
+    /**
+     * Returns the batch's schema.
+     * 
+     * @return `Schema`.
+     */
+    public Schema getSchema() {
+        return this.schema;
     }
 
 }
