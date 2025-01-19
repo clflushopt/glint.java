@@ -13,5 +13,6 @@
             "environmentVariable": "JDK_JAVA_OPTIONS",
             "value": "--add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED"
         }
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }

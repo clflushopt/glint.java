@@ -20,4 +20,9 @@ public record Field(String name, ArrowType dataType) {
         var children = new ArrayList<org.apache.arrow.vector.types.pojo.Field>();
         return new org.apache.arrow.vector.types.pojo.Field(name, fieldType, children);
     }
+
+    @Override
+    public String toString() {
+        return String.format("(name: %s, type: %s)", name, dataType.toString());
+    }
 }

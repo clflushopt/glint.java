@@ -73,4 +73,10 @@ public class Schema {
     public void setFields(List<Field> fields) {
         this.fields = fields;
     }
+
+    @Override
+    public String toString() {
+        return "Schema [fields=" + fields + "]";
+    }
+
 }
