@@ -68,4 +68,31 @@ public class CsvDataSourceTest {
         assertEquals("inferred schema doesn't match expected one", expectedSchema.getFields(),
                 source.getSchema().getFields());
     }
+
+    @Test
+    public void canProcessSimpleCSvFileWithHeaderAndSchema() {
+        String filename = "./testdata/employee.csv";
+        List<Field> expectedFields = List.of(new Field("id", ArrowTypes.Int64Type),
+                new Field("first_name", ArrowTypes.StringType),
+                new Field("last_name", ArrowTypes.StringType),
+                new Field("state", ArrowTypes.StringType),
+                new Field("job_title", ArrowTypes.StringType),
+                new Field("salary", ArrowTypes.Int64Type));
+        Schema expectedSchema = new Schema(expectedFields);
+
+        // Try building the schema from the datasource.
+        CsvDataSource source = null;
+        Optional<Schema> schema = Optional.ofNullable(null);
+
+        try {
+            source = new CsvDataSource(filename, schema, true, 1);
+        } catch (Exception e) {
+            fail("shit happens: " + e.fillInStackTrace());
+        }
+
+        // Actual assertions.
+        assertNotNull("source was not properly populated", source);
+        assertEquals("inferred schema doesn't match expected one", expectedSchema.getFields(),
+                source.getSchema().getFields());
+    }
 }

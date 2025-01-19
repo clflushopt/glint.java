@@ -25,6 +25,8 @@ public interface DataSource {
      * columns this is effectively how we handle column projection predicate
      * push-down.
      * 
+     * TODO: return needs to be an `Iterable<RecordBatch,BatchSize>`,
+     * 
      * @param projection
      * @return `RecordBatch` with only requested projections.
      */
