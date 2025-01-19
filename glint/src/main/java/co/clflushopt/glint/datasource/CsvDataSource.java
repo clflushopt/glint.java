@@ -65,6 +65,7 @@ public class CsvDataSource {
         parser.parseNext();
         var headers = parser.getContext().parsedHeaders();
 
+        logger.info("Fetched headers: " + String.join(",", headers));
         // Stop parsing since the rest can be inferred from the headers we collected.
         parser.stopParsing();
 
