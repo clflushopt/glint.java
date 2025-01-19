@@ -3,7 +3,6 @@ package co.clflushopt.glint.datasource;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.arrow.memory.RootAllocator;
@@ -26,8 +25,6 @@ import co.clflushopt.glint.types.Schema;
 import co.clflushopt.glint.util.IndexedStream;
 
 public class CsvReaderIterator implements Iterator<RecordBatch> {
-    private static final Logger logger = Logger.getLogger(CsvDataSource.class.getSimpleName());
-
     private final Schema schema;
     private final CsvParser parser;
     private final int batchSize;

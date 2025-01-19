@@ -46,8 +46,7 @@ public class FieldVectorFactoryTest {
 
     @Test(expected = IllegalStateException.class)
     public void testUnsupportedType() {
-        // Allow deprecated here for tests.
-        ArrowType unsupportedType = new ArrowType.Decimal(10, 2);
+        ArrowType unsupportedType = new ArrowType.Decimal(10, 2, 32);
         FieldVectorFactory.create(unsupportedType, 1);
 
     }
