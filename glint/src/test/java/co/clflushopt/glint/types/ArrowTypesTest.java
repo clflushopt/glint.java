@@ -7,6 +7,7 @@ import org.apache.arrow.vector.IntVector;
 import org.junit.Test;
 
 public class ArrowTypesTest {
+
     @Test
     public void canBuildArrowVectors() {
         var allocator = new RootAllocator();

@@ -11,17 +11,17 @@ public interface Store {
      * Fetch a value by its key.
      * 
      * @param key
-     * @return
+     * @return Value for key if one exists, null otherwise.
      */
     public ByteString get(ByteString key);
 
     /**
-     * Write a key, value pair to the store and returns the old value
-     * if one exists; otherwise `null`.
+     * Write a key, value pair to the store and returns the old value if one exists;
+     * otherwise `null`.
      * 
      * @param key
      * @param value
-     * @return
+     * @return Old value if one exists, null otherwise.
      */
     public ByteString put(ByteString key, ByteString value);
 }

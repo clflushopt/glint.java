@@ -41,4 +41,26 @@ public class MemoryStoreTest {
                 assertEquals(values, expected);
         }
 
+        @Test
+        public void canPutandGetValuesWithCapacity() {
+
+                var store = new MemoryStore(64);
+
+                List<String> keys = Lists.newArrayList("Alice", "Bob", "Eve", "Mallory");
+
+                List<String> values = Lists.newArrayList("likes to write compilers but dislikes LLVM",
+                                "doesn't like compilers but likes PLT", "can only write ANSI SQL",
+                                "tends to be terrible at partitioning without hints");
+
+                Streams.forEachPair(keys.stream(), values.stream(), (key, value) -> store
+                                .put(ByteString.copyFromUtf8(key), ByteString.copyFromUtf8(value)));
+
+                assertEquals(store.size(), 4);
+
+                var expected = keys.stream().map(key -> store.get(ByteString.copyFromUtf8(key)).toStringUtf8())
+                                .collect(Collectors.toList());
+
+                // Assert equality
+                assertEquals(values, expected);
+        }
 }
