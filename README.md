@@ -4,21 +4,20 @@
 
 ## Description
 
-Glint is a SQL query compiler capable of parsing, optimizing and compiling
-SQL queries into Java bytecode.
+Glint is a SQL query engine with query compilation support in Java.
 
 Following in the tradition of the new movement of modular database architectures
 Glint has no catalog or data management; its only capability is turning SQL queries
 into Java code that is then compiled and executed; think Calcite not Spark.
 
-In order to make it usable, at least for tests and benchmark purposes, we did plug
-an Arrow compatible access API this way we can read parquet files that represent
-virtual tables and execute our queries againt them.
+In order to make it fun, at least for tests and benchmark purposes, we did plug
+an Arrow compatible API with support for Memory, CSV and Partquet data sources
+allowing us to run against most benchmark datasets out there.
 
 ## Architecture
 
 Architecting query compilers is a complicated and active field of research; in fact
-Glint's architecture itself is inspired by several recent papers where the modularity
+Glint's architecture itself is inspired from several papers where the modularity
 aspect of a query compiler is studied or demonstrated.
 
 But before all of this, let's start with a brief tour of query engines in general this
