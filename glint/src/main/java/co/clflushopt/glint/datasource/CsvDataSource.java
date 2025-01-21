@@ -77,14 +77,13 @@ public class CsvDataSource implements DataSource {
         parser.stopParsing();
 
         if (hasHeaders) {
-            return new Schema(Streams.mapWithIndex(List.of(headers).stream(), (columnName,
-                    columnIndex) -> new Field(columnName, (int) columnIndex, ArrowTypes.StringType))
+            return new Schema(Streams.mapWithIndex(List.of(headers).stream(),
+                    (columnName, columnIndex) -> new Field(columnName, ArrowTypes.StringType))
                     .toList());
 
         } else {
-            return new Schema(Streams.mapWithIndex(List.of(headers).stream(),
-                    (_field, index) -> new Field(String.format("field_%d", index), (int) index,
-                            ArrowTypes.StringType))
+            return new Schema(Streams.mapWithIndex(List.of(headers).stream(), (_field,
+                    index) -> new Field(String.format("field_%d", index), ArrowTypes.StringType))
                     .toList());
         }
 

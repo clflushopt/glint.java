@@ -12,6 +12,8 @@ import java.util.Optional;
 
 import org.junit.Test;
 
+import com.google.common.collect.Iterables;
+
 import co.clflushopt.glint.types.ArrowTypes;
 import co.clflushopt.glint.types.Field;
 import co.clflushopt.glint.types.RecordBatch;
@@ -22,12 +24,12 @@ public class CsvDataSourceTest {
     @Test
     public void canProcessSimpleCsvFilesWithoutHeaders() {
         String filename = "./testdata/employee_no_header.csv";
-        List<Field> expectedFields = List.of(new Field("field_0", 0, ArrowTypes.StringType),
-                new Field("field_1", 1, ArrowTypes.StringType),
-                new Field("field_2", 2, ArrowTypes.StringType),
-                new Field("field_3", 3, ArrowTypes.StringType),
-                new Field("field_4", 4, ArrowTypes.StringType),
-                new Field("field_5", 5, ArrowTypes.StringType));
+        List<Field> expectedFields = List.of(new Field("field_0", ArrowTypes.StringType),
+                new Field("field_1", ArrowTypes.StringType), // Changed from Int64Type
+                new Field("field_2", ArrowTypes.StringType),
+                new Field("field_3", ArrowTypes.StringType),
+                new Field("field_4", ArrowTypes.StringType),
+                new Field("field_5", ArrowTypes.StringType));
         Schema expectedSchema = new Schema(expectedFields);
 
         // Try building the schema from the datasource.
@@ -49,12 +51,12 @@ public class CsvDataSourceTest {
     @Test
     public void canInferColumnNamesFromHeaders() {
         String filename = "./testdata/employee.csv";
-        List<Field> expectedFields = List.of(new Field("id", 0, ArrowTypes.StringType),
-                new Field("first_name", 1, ArrowTypes.StringType),
-                new Field("last_name", 2, ArrowTypes.StringType),
-                new Field("state", 3, ArrowTypes.StringType),
-                new Field("job_title", 4, ArrowTypes.StringType),
-                new Field("salary", 5, ArrowTypes.StringType));
+        List<Field> expectedFields = List.of(new Field("id", ArrowTypes.StringType),
+                new Field("first_name", ArrowTypes.StringType), // Changed from Int64Type
+                new Field("last_name", ArrowTypes.StringType),
+                new Field("state", ArrowTypes.StringType),
+                new Field("job_title", ArrowTypes.StringType),
+                new Field("salary", ArrowTypes.StringType));
         Schema expectedSchema = new Schema(expectedFields);
 
         // Try building the schema from the datasource.
@@ -76,12 +78,12 @@ public class CsvDataSourceTest {
     @Test
     public void canBuildDatasourceFromSchema() {
         String filename = "./testdata/employee.csv";
-        List<Field> expectedFields = List.of(new Field("id", 0, ArrowTypes.Int64Type),
-                new Field("first_name", 1, ArrowTypes.Int64Type),
-                new Field("last_name", 2, ArrowTypes.StringType),
-                new Field("state", 3, ArrowTypes.StringType),
-                new Field("job_title", 4, ArrowTypes.StringType),
-                new Field("salary", 5, ArrowTypes.Int64Type));
+        List<Field> expectedFields = List.of(new Field("id", ArrowTypes.StringType),
+                new Field("first_name", ArrowTypes.StringType), // Changed from Int64Type
+                new Field("last_name", ArrowTypes.StringType),
+                new Field("state", ArrowTypes.StringType),
+                new Field("job_title", ArrowTypes.StringType),
+                new Field("salary", ArrowTypes.StringType));
         Schema expectedSchema = new Schema(expectedFields);
 
         // Try building the schema from the datasource.
@@ -103,12 +105,12 @@ public class CsvDataSourceTest {
     @Test
     public void canProcessSimpleCSvFileWithHeaderAndSchema() {
         String filename = "./testdata/employee.csv";
-        List<Field> expectedFields = List.of(new Field("id", 0, ArrowTypes.Int64Type),
-                new Field("first_name", 1, ArrowTypes.StringType), // Changed from Int64Type
-                new Field("last_name", 2, ArrowTypes.StringType),
-                new Field("state", 3, ArrowTypes.StringType),
-                new Field("job_title", 4, ArrowTypes.StringType),
-                new Field("salary", 5, ArrowTypes.Int64Type));
+        List<Field> expectedFields = List.of(new Field("id", ArrowTypes.Int64Type),
+                new Field("first_name", ArrowTypes.StringType), // Changed from Int64Type
+                new Field("last_name", ArrowTypes.StringType),
+                new Field("state", ArrowTypes.StringType),
+                new Field("job_title", ArrowTypes.StringType),
+                new Field("salary", ArrowTypes.Int64Type));
         Schema expectedSchema = new Schema(expectedFields);
         Optional<Schema> schema = Optional.of(expectedSchema);
 
@@ -176,12 +178,12 @@ public class CsvDataSourceTest {
 
     // Helper methods to get values from the batch
     private String getStringValue(RecordBatch batch, String columnName, int rowIndex) {
-        var columnIndex = batch.getSchema().select(List.of(columnName)).getFields().get(0).index();
-        return (String) batch.getField(columnIndex).getValue(rowIndex);
+        var index = Iterables.indexOf(batch.getSchema().getFields(), f -> f.name() == columnName);
+        return (String) batch.getField(index).getValue(rowIndex);
     }
 
     private long getLongValue(RecordBatch batch, String columnName, int rowIndex) {
-        var columnIndex = batch.getSchema().select(List.of(columnName)).getFields().get(0).index();
-        return (Long) batch.getField(columnIndex).getValue(rowIndex);
+        var index = Iterables.indexOf(batch.getSchema().getFields(), f -> f.name() == columnName);
+        return (Long) batch.getField(index).getValue(rowIndex);
     }
 }

@@ -10,11 +10,11 @@ public class SchemaTest {
 
     @Test
     public void shouldNotMutateFields() {
-        var fields = List.of(new Field("id", 0, ArrowTypes.Int64Type),
-                new Field("name", 1, ArrowTypes.StringType),
-                new Field("department", 2, ArrowTypes.StringType),
-                new Field("on_vacation", 3, ArrowTypes.BooleanType),
-                new Field("salary", 4, ArrowTypes.Int64Type));
+        var fields = List.of(new Field("id", ArrowTypes.Int64Type),
+                new Field("name", ArrowTypes.StringType),
+                new Field("department", ArrowTypes.StringType),
+                new Field("on_vacation", ArrowTypes.BooleanType),
+                new Field("salary", ArrowTypes.Int64Type));
 
         var schema = new Schema(fields);
 
