@@ -2,6 +2,7 @@ package co.clflushopt.glint.types;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.arrow.vector.BigIntVector;
 import org.apache.arrow.vector.BitVector;
@@ -23,6 +24,7 @@ public class ArrowFieldVectorTest {
 
         ArrowFieldVector fieldVector = new ArrowFieldVector(vector);
 
+        assertTrue(fieldVector.getType() == ArrowTypes.BooleanType);
         assertEquals(2, fieldVector.getSize());
         assertEquals(ArrowTypes.BooleanType, fieldVector.getType());
         assertEquals(true, fieldVector.getValue(0));
@@ -38,6 +40,7 @@ public class ArrowFieldVectorTest {
 
         ArrowFieldVector fieldVector = new ArrowFieldVector(vector);
 
+        assertTrue(fieldVector.getType() == ArrowTypes.Int8Type);
         assertEquals(2, fieldVector.getSize());
         assertEquals(ArrowTypes.Int8Type, fieldVector.getType());
         assertEquals((byte) 42, fieldVector.getValue(0));
@@ -53,6 +56,7 @@ public class ArrowFieldVectorTest {
 
         ArrowFieldVector fieldVector = new ArrowFieldVector(vector);
 
+        assertTrue(fieldVector.getType() == ArrowTypes.Int16Type);
         assertEquals(2, fieldVector.getSize());
         assertEquals(ArrowTypes.Int16Type, fieldVector.getType());
         assertEquals((short) 12345, fieldVector.getValue(0));
@@ -68,6 +72,7 @@ public class ArrowFieldVectorTest {
 
         ArrowFieldVector fieldVector = new ArrowFieldVector(vector);
 
+        assertTrue(fieldVector.getType() == ArrowTypes.Int32Type);
         assertEquals(2, fieldVector.getSize());
         assertEquals(ArrowTypes.Int32Type, fieldVector.getType());
         assertEquals(1234567, fieldVector.getValue(0));
@@ -83,6 +88,7 @@ public class ArrowFieldVectorTest {
 
         ArrowFieldVector fieldVector = new ArrowFieldVector(vector);
 
+        assertTrue(fieldVector.getType() == ArrowTypes.Int64Type);
         assertEquals(2, fieldVector.getSize());
         assertEquals(ArrowTypes.Int64Type, fieldVector.getType());
         assertEquals(123456789L, fieldVector.getValue(0));
@@ -98,6 +104,7 @@ public class ArrowFieldVectorTest {
 
         ArrowFieldVector fieldVector = new ArrowFieldVector(vector);
 
+        assertTrue(fieldVector.getType() == ArrowTypes.FloatType);
         assertEquals(2, fieldVector.getSize());
         assertEquals(ArrowTypes.FloatType, fieldVector.getType());
         assertEquals(3.14f, (Float) fieldVector.getValue(0), 0.0001);
@@ -113,6 +120,7 @@ public class ArrowFieldVectorTest {
 
         ArrowFieldVector fieldVector = new ArrowFieldVector(vector);
 
+        assertTrue(fieldVector.getType() == ArrowTypes.DoubleType);
         assertEquals(2, fieldVector.getSize());
         assertEquals(ArrowTypes.DoubleType, fieldVector.getType());
         assertEquals(3.14159, (Double) fieldVector.getValue(0), 0.0001);
@@ -128,6 +136,7 @@ public class ArrowFieldVectorTest {
 
         ArrowFieldVector fieldVector = new ArrowFieldVector(vector);
 
+        assertTrue(fieldVector.getType() == ArrowTypes.StringType);
         assertEquals(2, fieldVector.getSize());
         assertEquals(ArrowTypes.StringType, fieldVector.getType());
         assertEquals("hello", fieldVector.getValue(0));
