@@ -1,4 +1,4 @@
-package co.clflushopt.glint.query.plan.logical;
+package co.clflushopt.glint.query.logical.expr;
 
 public abstract class BinaryExpr {
     private String name;

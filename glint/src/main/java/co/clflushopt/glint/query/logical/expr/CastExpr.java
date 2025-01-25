@@ -1,7 +1,8 @@
-package co.clflushopt.glint.query.plan.logical;
+package co.clflushopt.glint.query.logical.expr;
 
 import org.apache.arrow.vector.types.pojo.ArrowType;
 
+import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.types.ArrowTypes;
 import co.clflushopt.glint.types.Field;
 

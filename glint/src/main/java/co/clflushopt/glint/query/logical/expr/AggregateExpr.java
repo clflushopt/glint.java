@@ -1,5 +1,6 @@
-package co.clflushopt.glint.query.plan.logical;
+package co.clflushopt.glint.query.logical.expr;
 
+import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.types.Field;
 
 /**

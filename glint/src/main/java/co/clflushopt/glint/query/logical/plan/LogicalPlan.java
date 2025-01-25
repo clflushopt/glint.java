@@ -1,11 +1,11 @@
-package co.clflushopt.glint.query.plan.logical;
+package co.clflushopt.glint.query.logical.plan;
 
 import java.util.List;
 
 import co.clflushopt.glint.types.Schema;
 
 /**
- * 
+ *
  * LogicalPlan is an interface representing a relational operator pipeline that
  * acts on tuples.
  */
@@ -13,21 +13,21 @@ public interface LogicalPlan {
 
     /**
      * Returns the schema of the produced tuples.
-     * 
+     *
      * @return `Schema`
      */
     public Schema getSchema();
 
     /**
      * Returns a list of plans that will be consumed by this plan.
-     * 
+     *
      * @return `List<LogicalPlan>`
      */
     public List<LogicalPlan> children();
 
     /**
      * Return a human friendly view of the logical plan.
-     * 
+     *
      * @return `String`
      */
     public static String format(LogicalPlan plan, int indent) {

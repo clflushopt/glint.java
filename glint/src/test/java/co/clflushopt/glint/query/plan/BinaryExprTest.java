@@ -8,11 +8,11 @@ import org.apache.arrow.vector.types.pojo.ArrowType;
 import org.junit.Before;
 import org.junit.Test;
 
-import co.clflushopt.glint.query.plan.logical.AliasExpr;
-import co.clflushopt.glint.query.plan.logical.BooleanExpr;
-import co.clflushopt.glint.query.plan.logical.CastExpr;
-import co.clflushopt.glint.query.plan.logical.LogicalExpr;
-import co.clflushopt.glint.query.plan.logical.LogicalPlan;
+import co.clflushopt.glint.query.logical.expr.AliasExpr;
+import co.clflushopt.glint.query.logical.expr.BooleanExpr;
+import co.clflushopt.glint.query.logical.expr.CastExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalExpr;
+import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.types.ArrowTypes;
 import co.clflushopt.glint.types.Field;
 import co.clflushopt.glint.types.Schema;
