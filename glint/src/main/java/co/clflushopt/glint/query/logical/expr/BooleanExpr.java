@@ -20,6 +20,11 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
         return new Field(this.getName(), ArrowTypes.BooleanType);
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     /**
      * Returns an instance of `BooleanBinaryExpr` specialized for equality.
      *

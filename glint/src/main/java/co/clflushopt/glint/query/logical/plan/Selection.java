@@ -33,7 +33,7 @@ public class Selection implements LogicalPlan {
 
     @Override
     public String toString() {
-        return String.format("Filter: %s", expr);
+        return String.format("Filter: %s", expr.toString());
     }
 
 }

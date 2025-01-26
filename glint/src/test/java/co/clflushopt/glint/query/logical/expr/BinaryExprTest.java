@@ -1,4 +1,4 @@
-package co.clflushopt.glint.query.plan;
+package co.clflushopt.glint.query.logical.expr;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,10 +8,6 @@ import org.apache.arrow.vector.types.pojo.ArrowType;
 import org.junit.Before;
 import org.junit.Test;
 
-import co.clflushopt.glint.query.logical.expr.AliasExpr;
-import co.clflushopt.glint.query.logical.expr.BooleanExpr;
-import co.clflushopt.glint.query.logical.expr.CastExpr;
-import co.clflushopt.glint.query.logical.expr.LogicalExpr;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.types.ArrowTypes;
 import co.clflushopt.glint.types.Field;

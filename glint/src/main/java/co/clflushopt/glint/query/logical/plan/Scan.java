@@ -46,9 +46,9 @@ public class Scan implements LogicalPlan {
     @Override
     public String toString() {
         if (projections.isEmpty()) {
-            return String.format("Scan: %s; [projection=None]", path);
+            return String.format("Scan: %s [projection=None]", path);
         }
 
-        return String.format("Scan(%s, [projection=%s])", path, projections);
+        return String.format("Scan:%s [projection=(%s)]", path, String.join(", ", projections));
     }
 }

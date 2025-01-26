@@ -1,6 +1,7 @@
 package co.clflushopt.glint.query.logical.plan;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import co.clflushopt.glint.types.Schema;
 
@@ -33,10 +34,9 @@ public interface LogicalPlan {
     public static String format(LogicalPlan plan, int indent) {
         var sb = new StringBuilder();
 
-        for (int i = 0; i < indent; i++) {
-            sb.append(plan.toString()).append("\n");
-            plan.children().stream().forEach(child -> sb.append(format(child, indent + 1)));
-        }
+        IntStream.range(0, indent - 1).forEach(i -> sb.append("\t"));
+        sb.append(plan.toString()).append("\n");
+        plan.children().stream().forEach(child -> sb.append(format(child, indent + 1)));
 
         return sb.toString();
     }
