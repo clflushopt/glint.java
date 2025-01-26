@@ -15,7 +15,7 @@ public interface DataSource {
 
     /**
      * The schema associated with the data source.
-     * 
+     *
      * @return `Schema` of the data source; either inferred or user provided.
      */
     public Schema getSchema();
@@ -24,9 +24,7 @@ public interface DataSource {
      * Returns record batches from the data source with only the specified projected
      * columns this is effectively how we handle column projection predicate
      * push-down.
-     * 
-     * TODO: return needs to be an `Iterable<RecordBatch,BatchSize>`,
-     * 
+     *
      * @param projection
      * @return `RecordBatch` with only requested projections.
      */

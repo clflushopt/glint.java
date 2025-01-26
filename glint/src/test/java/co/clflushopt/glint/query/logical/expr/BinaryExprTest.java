@@ -59,13 +59,11 @@ public class BinaryExprTest {
 
             @Override
             public Schema getSchema() {
-                // TODO Auto-generated method stub
                 throw new UnsupportedOperationException("Unimplemented method 'getSchema'");
             }
 
             @Override
             public List<LogicalPlan> children() {
-                // TODO Auto-generated method stub
                 throw new UnsupportedOperationException("Unimplemented method 'children'");
             }
 

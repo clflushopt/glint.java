@@ -8,9 +8,6 @@ import co.clflushopt.glint.types.Field;
  * Aggregate functions.
  *
  * AggregateExpr
- *
- * TODO: make `AggregateExpr` abstract and move out the simpler ones to a
- * different class and add COUNT and COUNT(DISTINCT).
  */
 public abstract class AggregateExpr implements LogicalExpr {
     protected final String name;
