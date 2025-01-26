@@ -27,6 +27,17 @@ public interface LogicalPlan {
     public List<LogicalPlan> children();
 
     /**
+     * Return a human friendly view of the logical plan with default indentation.
+     *
+     * @param plan
+     * @param indent
+     * @return
+     */
+    public static String format(LogicalPlan plan) {
+        return format(plan, 1);
+    }
+
+    /**
      * Return a human friendly view of the logical plan.
      *
      * @return `String`
