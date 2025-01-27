@@ -27,7 +27,7 @@ public class Selection implements LogicalPlan {
     }
 
     @Override
-    public List<LogicalPlan> children() {
+    public List<LogicalPlan> getChildren() {
         return List.of(input);
     }
 

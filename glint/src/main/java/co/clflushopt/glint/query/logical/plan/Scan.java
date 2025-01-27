@@ -30,7 +30,7 @@ public class Scan implements LogicalPlan {
     }
 
     @Override
-    public List<LogicalPlan> children() {
+    public List<LogicalPlan> getChildren() {
         return List.of();
     }
 

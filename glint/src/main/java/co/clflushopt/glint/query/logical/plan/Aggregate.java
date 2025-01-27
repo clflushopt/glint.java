@@ -34,7 +34,7 @@ public class Aggregate implements LogicalPlan {
     }
 
     @Override
-    public List<LogicalPlan> children() {
+    public List<LogicalPlan> getChildren() {
         return List.of(input);
     }
 

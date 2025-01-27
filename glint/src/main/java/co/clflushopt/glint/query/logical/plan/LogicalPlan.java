@@ -24,7 +24,7 @@ public interface LogicalPlan {
      *
      * @return `List<LogicalPlan>`
      */
-    public List<LogicalPlan> children();
+    public List<LogicalPlan> getChildren();
 
     /**
      * Return a human friendly view of the logical plan with default indentation.
@@ -47,7 +47,7 @@ public interface LogicalPlan {
 
         IntStream.range(0, indent - 1).forEach(i -> sb.append("\t"));
         sb.append(plan.toString()).append("\n");
-        plan.children().stream().forEach(child -> sb.append(format(child, indent + 1)));
+        plan.getChildren().stream().forEach(child -> sb.append(format(child, indent + 1)));
 
         return sb.toString();
     }

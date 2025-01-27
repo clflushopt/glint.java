@@ -63,7 +63,7 @@ public class BinaryExprTest {
             }
 
             @Override
-            public List<LogicalPlan> children() {
+            public List<LogicalPlan> getChildren() {
                 throw new UnsupportedOperationException("Unimplemented method 'children'");
             }
 
