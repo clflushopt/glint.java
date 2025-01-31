@@ -112,7 +112,7 @@ public abstract class BooleanExpr implements Expr {
             } else if (type.equals(ArrowTypes.DoubleType)) {
                 return ((Double) left).equals((Double) right);
             } else if (type.equals(ArrowTypes.StringType)) {
-                return toString(left).equals(toString(right));
+                return left.toString().equals(right.toString());
             }
             throw new IllegalStateException(
                     "Unsupported data type in comparison expression: " + type);
@@ -139,7 +139,7 @@ public abstract class BooleanExpr implements Expr {
             } else if (type.equals(ArrowTypes.DoubleType)) {
                 return !((Double) left).equals((Double) right);
             } else if (type.equals(ArrowTypes.StringType)) {
-                return !toString(left).equals(toString(right));
+                return !left.toString().equals(right.toString());
             }
             throw new IllegalStateException(
                     "Unsupported data type in comparison expression: " + type);
@@ -166,7 +166,7 @@ public abstract class BooleanExpr implements Expr {
             } else if (type.equals(ArrowTypes.DoubleType)) {
                 return (Double) left < (Double) right;
             } else if (type.equals(ArrowTypes.StringType)) {
-                return toString(left).compareTo(toString(right)) < 0;
+                return left.toString().compareTo(right.toString()) < 0;
             }
             throw new IllegalStateException(
                     "Unsupported data type in comparison expression: " + type);
@@ -193,7 +193,7 @@ public abstract class BooleanExpr implements Expr {
             } else if (type.equals(ArrowTypes.DoubleType)) {
                 return (Double) left > (Double) right;
             } else if (type.equals(ArrowTypes.StringType)) {
-                return toString(left).compareTo(toString(right)) > 0;
+                return left.toString().compareTo(right.toString()) > 0;
             }
             throw new IllegalStateException(
                     "Unsupported data type in comparison expression: " + type);
@@ -220,10 +220,12 @@ public abstract class BooleanExpr implements Expr {
             } else if (type.equals(ArrowTypes.DoubleType)) {
                 return (Double) left <= (Double) right;
             } else if (type.equals(ArrowTypes.StringType)) {
-                return toString(left).compareTo(toString(right)) <= 0;
+                return left.toString().compareTo(right.toString()) <= 0;
             }
+
             throw new IllegalStateException(
                     "Unsupported data type in comparison expression: " + type);
+
         }
     }
 
@@ -247,10 +249,11 @@ public abstract class BooleanExpr implements Expr {
             } else if (type.equals(ArrowTypes.DoubleType)) {
                 return (Double) left >= (Double) right;
             } else if (type.equals(ArrowTypes.StringType)) {
-                return toString(left).compareTo(toString(right)) >= 0;
+                return left.toString().compareTo(right.toString()) >= 0;
             }
             throw new IllegalStateException(
                     "Unsupported data type in comparison expression: " + type);
+
         }
     }
 }
