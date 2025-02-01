@@ -48,6 +48,9 @@ public class Scan implements LogicalPlan {
 
     private Schema infer() {
         var schema = this.dataSource.getSchema();
+        assert schema != null;
+        assert schema.getFields().size() > 0;
+
         if (projections.isEmpty()) {
             return schema;
         }

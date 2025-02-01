@@ -95,4 +95,7 @@ TODO.md
 TODO.rst
 TODO
 
+### Datasets ###
+datasets/
+
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,visualstudiocode,gradle

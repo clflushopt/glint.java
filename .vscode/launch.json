@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "NycTripsBenchmark",
+            "request": "launch",
+            "mainClass": "co.clflushopt.glint.NycTripsBenchmark",
+            "projectName": "glint"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

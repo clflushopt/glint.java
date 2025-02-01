@@ -3,12 +3,18 @@ package co.clflushopt.glint.core;
 import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Optional;
 
 import co.clflushopt.glint.dataframe.DataFrame;
 import co.clflushopt.glint.dataframe.DataFrameImpl;
 import co.clflushopt.glint.datasource.CsvDataSource;
+import co.clflushopt.glint.datasource.ParquetDataSource;
+import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.logical.plan.Scan;
+import co.clflushopt.glint.query.optimizer.QueryOptimizer;
+import co.clflushopt.glint.query.planner.QueryPlanner;
+import co.clflushopt.glint.types.RecordBatch;
 import co.clflushopt.glint.types.Schema;
 
 public class ExecutionContext {
@@ -20,6 +26,13 @@ public class ExecutionContext {
     private ExecutionContext(HashMap<String, Object> context, Configuration configuration) {
         this.context = context;
         this.config = configuration;
+    }
+
+    public Iterator<RecordBatch> execute(LogicalPlan plan) {
+        // Implementation to execute logical plan
+        var optimizedPlan = QueryOptimizer.optimize(plan);
+        var physicalPlan = QueryPlanner.createPhysicalPlan(optimizedPlan);
+        return physicalPlan.execute();
     }
 
     /**
@@ -72,6 +85,32 @@ public class ExecutionContext {
             throws FileNotFoundException {
         var source = new CsvDataSource(path, schema, options.hasHeader(), defaultBatchSize);
         return new DataFrameImpl(new Scan(options.getTableName(), source, Collections.emptyList()));
+    }
+
+    /**
+     * Creates a DataFrame from a CSV file with default options.
+     *
+     *
+     * @param name
+     * @param df
+     */
+    public DataFrame readCsv(String path, Schema schema, CsvReaderOptions options)
+            throws FileNotFoundException {
+        var source = new CsvDataSource(path, Optional.of(schema), options.hasHeader(),
+                defaultBatchSize);
+        return new DataFrameImpl(new Scan(options.getTableName(), source, Collections.emptyList()));
+    }
+
+    /**
+     * Creates a DataFrame from a Parquet file with the specified options.
+     *
+     *
+     * @param name
+     * @param df
+     */
+    public DataFrame readParquet(String path, Optional<Schema> schema) {
+        var source = new ParquetDataSource(path);
+        return new DataFrameImpl(new Scan("parquet_scan", source, Collections.emptyList()));
     }
 
     /**

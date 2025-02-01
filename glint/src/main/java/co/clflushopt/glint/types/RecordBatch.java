@@ -12,7 +12,7 @@ public class RecordBatch {
     /**
      * Creates a new batch of records for a list of `ColumnVector` representing the
      * fields (in columnar format) and matching the given schema.
-     * 
+     *
      * @param schema
      * @param fields
      */
@@ -23,7 +23,7 @@ public class RecordBatch {
 
     /**
      * Returns a reference to the ColumnVector at a given index.
-     * 
+     *
      * @param i
      * @return `ColumnVector`
      */
@@ -33,7 +33,7 @@ public class RecordBatch {
 
     /**
      * Returns the number of rows in the batch.
-     * 
+     *
      * @return `int`.
      */
     public int getRowSize() {
@@ -42,7 +42,7 @@ public class RecordBatch {
 
     /**
      * Returns the number of columns in the batch.
-     * 
+     *
      * @return `int`.
      */
     public int getColumnSize() {
@@ -51,11 +51,28 @@ public class RecordBatch {
 
     /**
      * Returns the batch's schema.
-     * 
+     *
      * @return `Schema`.
      */
     public Schema getSchema() {
         return this.schema;
     }
 
+    /**
+     * Returns a CSV representation of the batch.
+     *
+     */
+    public String toCsv() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < getRowSize(); i++) {
+            for (int j = 0; j < getColumnSize(); j++) {
+                sb.append(getField(j).getValue(i));
+                if (j < getColumnSize() - 1) {
+                    sb.append(",");
+                }
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }

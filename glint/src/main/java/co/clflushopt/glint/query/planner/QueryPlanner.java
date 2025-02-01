@@ -97,7 +97,7 @@ public class QueryPlanner {
                                     "Unsupported aggregate function: " + expr);
                         }
                     }).collect(Collectors.toList());
-            return new HashAggregateOperator(input, groupExpr, aggregateExpr, agg.getSchema());
+            return new HashAggregateOperator(input, groupExpr, aggregateExpr, plan.getSchema());
         }
         throw new IllegalStateException("Unsupported logical plan: " + plan.getClass());
     }
@@ -134,22 +134,22 @@ public class QueryPlanner {
             PhysicalExpr l = createPhysicalExpr(binary.getLhs(), input);
             PhysicalExpr r = createPhysicalExpr(binary.getRhs(), input);
 
-            if (binary.getOperator() == "eq") {
+            if (binary.getOperator() == "=") {
                 return new EqExpression(l, r);
             }
-            if (binary.getOperator() == "neq") {
+            if (binary.getOperator() == "!=") {
                 return new NeqExpression(l, r);
             }
-            if (binary.getOperator() == "gt") {
+            if (binary.getOperator() == ">") {
                 return new GtExpression(l, r);
             }
-            if (binary.getOperator() == "gte") {
+            if (binary.getOperator() == ">=") {
                 return new GteExpression(l, r);
             }
-            if (binary.getOperator() == "lt") {
+            if (binary.getOperator() == "<") {
                 return new LtExpression(l, r);
             }
-            if (binary.getOperator() == "lte") {
+            if (binary.getOperator() == "<=") {
                 return new LteExpression(l, r);
             }
             if (binary.getOperator() == "and") {
@@ -158,8 +158,8 @@ public class QueryPlanner {
             if (binary.getOperator() == "or") {
                 return new OrExpression(l, r);
             }
-            // TODO: Add PhysicalMathExpr
-            throw new IllegalStateException("Unsupported binary expression: " + expr);
+            throw new IllegalStateException(
+                    "Unsupported binary expression: " + binary + " " + binary.getOperator());
 
         }
         throw new IllegalStateException("Unsupported logical expression: " + expr);
