@@ -1,22 +1,25 @@
 package co.clflushopt.glint.query.physical.expr;
 
 import co.clflushopt.glint.query.functional.Accumulator;
-import co.clflushopt.glint.query.functional.SumAccumulator;
+import co.clflushopt.glint.query.functional.MinAccumulator;
 
 /**
- * Implementation of the `SUM` expression.
+ * Phyiscal expression for the `MIN` expression.
  *
- * SumExpr
+ * MinExpr
  */
-public class SumExpr implements AggregateExpr {
-    private Expr expression;
+public class PhysicalMinExpr implements PhysicalAggregateExpr {
+    /**
+     * Expression being aggregated.
+     */
+    private PhysicalExpr expression;
 
     /**
-     * Create a new `SUM` expression.
+     * Create a new `MAX` expression.
      *
      * @param expression the expression to aggregate.
      */
-    public SumExpr(Expr expression) {
+    public PhysicalMinExpr(PhysicalExpr expression) {
         this.expression = expression;
     }
 
@@ -25,27 +28,22 @@ public class SumExpr implements AggregateExpr {
      *
      * @return the expression being aggregated.
      */
-    public Expr getExpression() {
+    public PhysicalExpr getExpression() {
         return expression;
     }
 
-    /**
-     * Get the string representation of the `SUM` expression.
-     *
-     */
     @Override
     public String toString() {
-        return String.format("SUM(%s)", expression.toString());
+        return String.format("MIN(%s)", expression.toString());
     }
 
     @Override
     public Accumulator getAccumulator() {
-        return new SumAccumulator();
+        return new MinAccumulator();
     }
 
     @Override
-    public Expr getInputExpr() {
+    public PhysicalExpr getInputExpr() {
         return expression;
     }
-
 }

@@ -20,6 +20,14 @@ public class CastExpr implements LogicalExpr {
         this.dataType = dataType;
     }
 
+    public LogicalExpr getExpr() {
+        return this.expr;
+    }
+
+    public ArrowType getDataType() {
+        return this.dataType;
+    }
+
     @Override
     public Field toField(LogicalPlan plan) {
         return new Field(expr.toField(plan).name(), dataType);

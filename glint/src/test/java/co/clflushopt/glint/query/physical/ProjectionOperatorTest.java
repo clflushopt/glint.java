@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import co.clflushopt.glint.query.physical.expr.ColumnExpr;
-import co.clflushopt.glint.query.physical.expr.Expr;
+import co.clflushopt.glint.query.physical.expr.PhysicalColumnExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalExpr;
 import co.clflushopt.glint.query.physical.plan.ProjectionOperator;
 import co.clflushopt.glint.query.physical.plan.ScanOperator;
 import co.clflushopt.glint.types.RecordBatch;
@@ -28,8 +28,8 @@ public class ProjectionOperatorTest {
         ScanOperator scan = new ScanOperator(dataSource, Collections.emptyList());
 
         // Project only name and age
-        List<Expr> projections = Arrays.asList(new ColumnExpr(1), // name
-                new ColumnExpr(2) // age
+        List<PhysicalExpr> projections = Arrays.asList(new PhysicalColumnExpr(1), // name
+                new PhysicalColumnExpr(2) // age
         );
 
         ProjectionOperator projection = new ProjectionOperator(scan, schema, projections);

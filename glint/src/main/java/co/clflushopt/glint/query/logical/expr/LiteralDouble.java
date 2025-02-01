@@ -23,4 +23,8 @@ public class LiteralDouble implements LogicalExpr {
     public String toString() {
         return value.toString();
     }
+
+    public Double getValue() {
+        return value;
+    }
 }

@@ -5,7 +5,7 @@ import co.clflushopt.glint.types.ColumnVector;
 import co.clflushopt.glint.types.LiteralValueVector;
 import co.clflushopt.glint.types.RecordBatch;
 
-public class LiteralStringExpr implements Expr {
+public class LiteralStringExpr implements PhysicalExpr {
     private String value;
 
     public LiteralStringExpr(String value) {

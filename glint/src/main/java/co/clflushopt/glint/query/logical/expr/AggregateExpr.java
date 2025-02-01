@@ -18,6 +18,10 @@ public abstract class AggregateExpr implements LogicalExpr {
         this.expr = expr;
     }
 
+    public LogicalExpr getExpr() {
+        return expr;
+    }
+
     @Override
     public Field toField(LogicalPlan plan) {
         return new Field(name, expr.toField(plan).dataType());

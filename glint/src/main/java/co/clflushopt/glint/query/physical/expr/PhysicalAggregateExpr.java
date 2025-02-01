@@ -7,7 +7,7 @@ import co.clflushopt.glint.query.functional.Accumulator;
  *
  * AggregateExpr
  */
-public interface AggregateExpr {
+public interface PhysicalAggregateExpr {
 
     /**
      * Get the accumulator for the aggregate expression.
@@ -21,5 +21,5 @@ public interface AggregateExpr {
      *
      * @return
      */
-    public Expr getInputExpr();
+    public PhysicalExpr getInputExpr();
 }

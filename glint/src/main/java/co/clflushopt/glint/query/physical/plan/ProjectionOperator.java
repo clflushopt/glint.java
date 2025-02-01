@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import co.clflushopt.glint.query.physical.expr.Expr;
+import co.clflushopt.glint.query.physical.expr.PhysicalExpr;
 import co.clflushopt.glint.types.ColumnVector;
 import co.clflushopt.glint.types.RecordBatch;
 import co.clflushopt.glint.types.Schema;
@@ -16,7 +16,7 @@ import co.clflushopt.glint.types.Schema;
  */
 public class ProjectionOperator implements PhysicalPlan {
     private PhysicalPlan input;
-    private List<Expr> projections;
+    private List<PhysicalExpr> projections;
     private Schema schema;
 
     /**
@@ -25,7 +25,7 @@ public class ProjectionOperator implements PhysicalPlan {
      * @param input      the input operator.
      * @param projection the columns to project.
      */
-    public ProjectionOperator(PhysicalPlan input, Schema schema, List<Expr> projections) {
+    public ProjectionOperator(PhysicalPlan input, Schema schema, List<PhysicalExpr> projections) {
         this.input = input;
         this.projections = projections;
         this.schema = schema;

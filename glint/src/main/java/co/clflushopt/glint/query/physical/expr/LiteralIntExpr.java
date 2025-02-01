@@ -5,7 +5,7 @@ import co.clflushopt.glint.types.ColumnVector;
 import co.clflushopt.glint.types.LiteralValueVector;
 import co.clflushopt.glint.types.RecordBatch;
 
-public class LiteralIntExpr implements Expr {
+public class LiteralIntExpr implements PhysicalExpr {
     private int value;
 
     public LiteralIntExpr(int value) {

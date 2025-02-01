@@ -11,8 +11,8 @@ import org.apache.arrow.memory.RootAllocator;
 import org.apache.arrow.vector.VectorSchemaRoot;
 
 import co.clflushopt.glint.query.functional.Accumulator;
-import co.clflushopt.glint.query.physical.expr.AggregateExpr;
-import co.clflushopt.glint.query.physical.expr.Expr;
+import co.clflushopt.glint.query.physical.expr.PhysicalAggregateExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalExpr;
 import co.clflushopt.glint.types.ArrowFieldVector;
 import co.clflushopt.glint.types.ArrowVectorBuilder;
 import co.clflushopt.glint.types.ColumnVector;
@@ -29,22 +29,22 @@ import co.clflushopt.glint.types.Schema;
  * to find matching rows.
  *
  */
-public class HashJoinOperator implements PhysicalPlan {
+public class HashAggregateOperator implements PhysicalPlan {
     private PhysicalPlan input;
-    private List<Expr> groupByExpr;
-    private List<AggregateExpr> aggregateExpr;
+    private List<PhysicalExpr> groupByExpr;
+    private List<PhysicalAggregateExpr> aggregateExpr;
     private Schema schema;
 
     /**
-     * Create a new HashJoinOperator.
+     * Create a new HashAggregateOperator.
      *
      * @param left     the left input operator.
      * @param right    the right input operator.
      * @param leftKey  the join key for the left input.
      * @param rightKey the join key for the right input.
      */
-    public HashJoinOperator(PhysicalPlan input, List<Expr> groupByExpr,
-            List<AggregateExpr> aggregateExpr, Schema schema) {
+    public HashAggregateOperator(PhysicalPlan input, List<PhysicalExpr> groupByExpr,
+            List<PhysicalAggregateExpr> aggregateExpr, Schema schema) {
         this.input = input;
         this.groupByExpr = groupByExpr;
         this.aggregateExpr = aggregateExpr;

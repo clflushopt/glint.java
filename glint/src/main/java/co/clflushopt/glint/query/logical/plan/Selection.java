@@ -20,6 +20,14 @@ public class Selection implements LogicalPlan {
         this.expr = expr;
     }
 
+    public LogicalExpr getExpr() {
+        return expr;
+    }
+
+    public LogicalPlan getInput() {
+        return input;
+    }
+
     @Override
     public Schema getSchema() {
         // Schema is inherited from the parent plan.

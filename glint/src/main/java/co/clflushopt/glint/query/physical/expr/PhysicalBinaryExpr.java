@@ -10,11 +10,11 @@ import co.clflushopt.glint.types.RecordBatch;
  *
  * BinaryExpr
  */
-public abstract class BinaryExpr implements Expr {
-    protected Expr left;
-    protected Expr right;
+public abstract class PhysicalBinaryExpr implements PhysicalExpr {
+    protected PhysicalExpr left;
+    protected PhysicalExpr right;
 
-    public BinaryExpr(Expr left, Expr right) {
+    public PhysicalBinaryExpr(PhysicalExpr left, PhysicalExpr right) {
         this.left = left;
         this.right = right;
     }

@@ -12,11 +12,11 @@ import co.clflushopt.glint.types.RecordBatch;
 /**
  * Base class for boolean expression evaluation in the physical plan.
  */
-public abstract class BooleanExpr implements Expr {
-    protected final Expr left;
-    protected final Expr right;
+public abstract class PhysicalBooleanExpr implements PhysicalExpr {
+    protected final PhysicalExpr left;
+    protected final PhysicalExpr right;
 
-    protected BooleanExpr(Expr left, Expr right) {
+    protected PhysicalBooleanExpr(PhysicalExpr left, PhysicalExpr right) {
         this.left = left;
         this.right = right;
     }
@@ -63,8 +63,8 @@ public abstract class BooleanExpr implements Expr {
         throw new IllegalStateException("Cannot convert to boolean: " + value);
     }
 
-    public static class AndExpression extends BooleanExpr {
-        public AndExpression(Expr left, Expr right) {
+    public static class AndExpression extends PhysicalBooleanExpr {
+        public AndExpression(PhysicalExpr left, PhysicalExpr right) {
             super(left, right);
         }
 
@@ -74,8 +74,8 @@ public abstract class BooleanExpr implements Expr {
         }
     }
 
-    public static class OrExpression extends BooleanExpr {
-        public OrExpression(Expr left, Expr right) {
+    public static class OrExpression extends PhysicalBooleanExpr {
+        public OrExpression(PhysicalExpr left, PhysicalExpr right) {
             super(left, right);
         }
 
@@ -85,8 +85,8 @@ public abstract class BooleanExpr implements Expr {
         }
     }
 
-    public static class EqExpression extends BooleanExpr {
-        public EqExpression(Expr left, Expr right) {
+    public static class EqExpression extends PhysicalBooleanExpr {
+        public EqExpression(PhysicalExpr left, PhysicalExpr right) {
             super(left, right);
         }
 
@@ -112,8 +112,8 @@ public abstract class BooleanExpr implements Expr {
         }
     }
 
-    public static class NeqExpression extends BooleanExpr {
-        public NeqExpression(Expr left, Expr right) {
+    public static class NeqExpression extends PhysicalBooleanExpr {
+        public NeqExpression(PhysicalExpr left, PhysicalExpr right) {
             super(left, right);
         }
 
@@ -139,8 +139,8 @@ public abstract class BooleanExpr implements Expr {
         }
     }
 
-    public static class LtExpression extends BooleanExpr {
-        public LtExpression(Expr left, Expr right) {
+    public static class LtExpression extends PhysicalBooleanExpr {
+        public LtExpression(PhysicalExpr left, PhysicalExpr right) {
             super(left, right);
         }
 
@@ -166,8 +166,8 @@ public abstract class BooleanExpr implements Expr {
         }
     }
 
-    public static class GtExpression extends BooleanExpr {
-        public GtExpression(Expr left, Expr right) {
+    public static class GtExpression extends PhysicalBooleanExpr {
+        public GtExpression(PhysicalExpr left, PhysicalExpr right) {
             super(left, right);
         }
 
@@ -193,8 +193,8 @@ public abstract class BooleanExpr implements Expr {
         }
     }
 
-    public static class LteExpression extends BooleanExpr {
-        public LteExpression(Expr left, Expr right) {
+    public static class LteExpression extends PhysicalBooleanExpr {
+        public LteExpression(PhysicalExpr left, PhysicalExpr right) {
             super(left, right);
         }
 
@@ -222,8 +222,8 @@ public abstract class BooleanExpr implements Expr {
         }
     }
 
-    public static class GteExpression extends BooleanExpr {
-        public GteExpression(Expr left, Expr right) {
+    public static class GteExpression extends PhysicalBooleanExpr {
+        public GteExpression(PhysicalExpr left, PhysicalExpr right) {
             super(left, right);
         }
 

@@ -10,7 +10,7 @@ import org.apache.arrow.vector.BitVector;
 import org.apache.arrow.vector.FieldVector;
 import org.apache.arrow.vector.VarCharVector;
 
-import co.clflushopt.glint.query.physical.expr.Expr;
+import co.clflushopt.glint.query.physical.expr.PhysicalExpr;
 import co.clflushopt.glint.types.ArrowFieldVector;
 import co.clflushopt.glint.types.ArrowVectorBuilder;
 import co.clflushopt.glint.types.ColumnVector;
@@ -19,9 +19,9 @@ import co.clflushopt.glint.types.Schema;
 
 public class FilterOperator implements PhysicalPlan {
     private final PhysicalPlan input;
-    private final Expr expr; // Assuming you have an Expression interface
+    private final PhysicalExpr expr; // Assuming you have an Expression interface
 
-    public FilterOperator(PhysicalPlan input, Expr expr) {
+    public FilterOperator(PhysicalPlan input, PhysicalExpr expr) {
         this.input = input;
         this.expr = expr;
     }

@@ -16,6 +16,10 @@ public class ColumnExpr implements LogicalExpr {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public Field toField(LogicalPlan plan) {
         return plan.getSchema().getFields().stream().filter(field -> field.name() == name)

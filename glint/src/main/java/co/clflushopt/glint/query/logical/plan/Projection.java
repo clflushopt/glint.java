@@ -22,6 +22,14 @@ public class Projection implements LogicalPlan {
         this.expr = expr;
     }
 
+    public List<LogicalExpr> getExpr() {
+        return expr;
+    }
+
+    public LogicalPlan getInput() {
+        return input;
+    }
+
     @Override
     public Schema getSchema() {
         return new Schema(expr.stream().map(e -> e.toField(input)).toList());

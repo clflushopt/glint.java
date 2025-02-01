@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import co.clflushopt.glint.query.physical.expr.BooleanExpr;
-import co.clflushopt.glint.query.physical.expr.ColumnExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalBooleanExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalColumnExpr;
 import co.clflushopt.glint.types.ArrowTypes;
 import co.clflushopt.glint.types.ColumnVector;
 import co.clflushopt.glint.types.Field;
@@ -35,7 +35,8 @@ public class BooleanExprTest {
 
         RecordBatch batch = new Fuzzer().createRecordBatch(schema, data);
 
-        BooleanExpr expr = new BooleanExpr.GteExpression(new ColumnExpr(0), new ColumnExpr(1));
+        PhysicalBooleanExpr expr = new PhysicalBooleanExpr.GteExpression(new PhysicalColumnExpr(0),
+                new PhysicalColumnExpr(1));
         ColumnVector result = expr.eval(batch);
 
         assertEquals(a.size(), result.getSize());
@@ -58,7 +59,8 @@ public class BooleanExprTest {
                 (List<Object>) (List<?>) b);
         RecordBatch batch = new Fuzzer().createRecordBatch(schema, data);
 
-        BooleanExpr expr = new BooleanExpr.GteExpression(new ColumnExpr(0), new ColumnExpr(1));
+        PhysicalBooleanExpr expr = new PhysicalBooleanExpr.GteExpression(new PhysicalColumnExpr(0),
+                new PhysicalColumnExpr(1));
         ColumnVector result = expr.eval(batch);
 
         assertEquals(a.size(), result.getSize());
@@ -79,7 +81,8 @@ public class BooleanExprTest {
                 (List<Object>) (List<?>) b);
         RecordBatch batch = new Fuzzer().createRecordBatch(schema, data);
 
-        BooleanExpr expr = new BooleanExpr.GteExpression(new ColumnExpr(0), new ColumnExpr(1));
+        PhysicalBooleanExpr expr = new PhysicalBooleanExpr.GteExpression(new PhysicalColumnExpr(0),
+                new PhysicalColumnExpr(1));
         ColumnVector result = expr.eval(batch);
 
         assertEquals(a.size(), result.getSize());
@@ -100,7 +103,8 @@ public class BooleanExprTest {
                 (List<Object>) (List<?>) b);
         RecordBatch batch = new Fuzzer().createRecordBatch(schema, data);
 
-        BooleanExpr expr = new BooleanExpr.GteExpression(new ColumnExpr(0), new ColumnExpr(1));
+        PhysicalBooleanExpr expr = new PhysicalBooleanExpr.GteExpression(new PhysicalColumnExpr(0),
+                new PhysicalColumnExpr(1));
         ColumnVector result = expr.eval(batch);
 
         assertEquals(a.size(), result.getSize());
@@ -122,7 +126,8 @@ public class BooleanExprTest {
 
         RecordBatch batch = new Fuzzer().createRecordBatch(schema, data);
 
-        BooleanExpr expr = new BooleanExpr.GteExpression(new ColumnExpr(0), new ColumnExpr(1));
+        PhysicalBooleanExpr expr = new PhysicalBooleanExpr.GteExpression(new PhysicalColumnExpr(0),
+                new PhysicalColumnExpr(1));
         ColumnVector result = expr.eval(batch);
 
         assertEquals(a.size(), result.getSize());
@@ -144,7 +149,8 @@ public class BooleanExprTest {
 
         RecordBatch batch = new Fuzzer().createRecordBatch(schema, data);
 
-        BooleanExpr expr = new BooleanExpr.GteExpression(new ColumnExpr(0), new ColumnExpr(1));
+        PhysicalBooleanExpr expr = new PhysicalBooleanExpr.GteExpression(new PhysicalColumnExpr(0),
+                new PhysicalColumnExpr(1));
         ColumnVector result = expr.eval(batch);
 
         assertEquals(a.size(), result.getSize());

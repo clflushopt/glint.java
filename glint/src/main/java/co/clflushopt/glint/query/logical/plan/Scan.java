@@ -24,6 +24,14 @@ public class Scan implements LogicalPlan {
         this.schema = infer();
     }
 
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public List<String> getProjections() {
+        return projections;
+    }
+
     @Override
     public Schema getSchema() {
         return schema;

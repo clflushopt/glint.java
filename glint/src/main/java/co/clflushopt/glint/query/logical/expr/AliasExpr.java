@@ -17,6 +17,14 @@ public class AliasExpr implements LogicalExpr {
         this.alias = alias;
     }
 
+    public LogicalExpr getExpr() {
+        return this.expr;
+    }
+
+    public String getAlias() {
+        return this.alias;
+    }
+
     @Override
     public Field toField(LogicalPlan plan) {
         return new Field(expr.toField(plan).name(), expr.toField(plan).dataType());

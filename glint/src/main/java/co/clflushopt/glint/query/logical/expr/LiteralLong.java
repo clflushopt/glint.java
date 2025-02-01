@@ -23,4 +23,8 @@ public class LiteralLong implements LogicalExpr {
     public String toString() {
         return value.toString();
     }
+
+    public Long getValue() {
+        return value;
+    }
 }

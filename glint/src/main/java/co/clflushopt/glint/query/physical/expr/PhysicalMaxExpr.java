@@ -8,18 +8,18 @@ import co.clflushopt.glint.query.functional.MaxAccumulator;
  *
  * MaxExpr
  */
-public class MaxExpr implements AggregateExpr {
+public class PhysicalMaxExpr implements PhysicalAggregateExpr {
     /**
      * Expression being aggregated.
      */
-    private Expr expression;
+    private PhysicalExpr expression;
 
     /**
      * Create a new `MAX` expression.
      *
      * @param expression the expression to aggregate.
      */
-    public MaxExpr(Expr expression) {
+    public PhysicalMaxExpr(PhysicalExpr expression) {
         this.expression = expression;
     }
 
@@ -28,7 +28,7 @@ public class MaxExpr implements AggregateExpr {
      *
      * @return the expression being aggregated.
      */
-    public Expr getExpression() {
+    public PhysicalExpr getExpression() {
         return expression;
     }
 
@@ -43,7 +43,7 @@ public class MaxExpr implements AggregateExpr {
     }
 
     @Override
-    public Expr getInputExpr() {
+    public PhysicalExpr getInputExpr() {
         return expression;
     }
 }

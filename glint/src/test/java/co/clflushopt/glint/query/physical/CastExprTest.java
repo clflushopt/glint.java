@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import co.clflushopt.glint.query.physical.expr.CastExpr;
-import co.clflushopt.glint.query.physical.expr.ColumnExpr;
-import co.clflushopt.glint.query.physical.expr.Expr;
+import co.clflushopt.glint.query.physical.expr.PhysicalCastExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalColumnExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalExpr;
 import co.clflushopt.glint.types.ArrowTypes;
 import co.clflushopt.glint.types.ColumnVector;
 import co.clflushopt.glint.types.Field;
@@ -30,7 +30,7 @@ public class CastExprTest {
         List<List<Object>> data = Arrays.asList((List<Object>) (List<?>) values);
         RecordBatch batch = new Fuzzer().createRecordBatch(schema, data);
 
-        Expr expr = new CastExpr(new ColumnExpr(0), ArrowTypes.StringType);
+        PhysicalExpr expr = new PhysicalCastExpr(new PhysicalColumnExpr(0), ArrowTypes.StringType);
         ColumnVector result = expr.eval(batch);
 
         assertEquals(values.size(), result.getSize());
@@ -50,7 +50,7 @@ public class CastExprTest {
         List<List<Object>> data = Arrays.asList((List<Object>) (List<?>) values);
         RecordBatch batch = new Fuzzer().createRecordBatch(schema, data);
 
-        Expr expr = new CastExpr(new ColumnExpr(0), ArrowTypes.FloatType);
+        PhysicalExpr expr = new PhysicalCastExpr(new PhysicalColumnExpr(0), ArrowTypes.FloatType);
         ColumnVector result = expr.eval(batch);
 
         assertEquals(values.size(), result.getSize());

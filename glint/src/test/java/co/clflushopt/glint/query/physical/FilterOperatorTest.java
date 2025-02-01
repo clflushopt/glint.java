@@ -8,10 +8,10 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import co.clflushopt.glint.query.physical.expr.BooleanExpr;
-import co.clflushopt.glint.query.physical.expr.ColumnExpr;
-import co.clflushopt.glint.query.physical.expr.Expr;
 import co.clflushopt.glint.query.physical.expr.LiteralIntExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalBooleanExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalColumnExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalExpr;
 import co.clflushopt.glint.query.physical.plan.FilterOperator;
 import co.clflushopt.glint.query.physical.plan.ScanOperator;
 import co.clflushopt.glint.types.RecordBatch;
@@ -28,7 +28,8 @@ public class FilterOperatorTest {
         ScanOperator scan = new ScanOperator(dataSource, Collections.emptyList());
 
         // Filter age > 30
-        Expr filterExpr = new BooleanExpr.GtExpression(new ColumnExpr(2), new LiteralIntExpr(30));
+        PhysicalExpr filterExpr = new PhysicalBooleanExpr.GtExpression(new PhysicalColumnExpr(2),
+                new LiteralIntExpr(30));
 
         FilterOperator filter = new FilterOperator(scan, filterExpr);
         Iterator<RecordBatch> result = filter.execute();

@@ -8,10 +8,10 @@ import co.clflushopt.glint.types.RecordBatch;
  *
  * ColumnExpr
  */
-public class ColumnExpr implements Expr {
+public class PhysicalColumnExpr implements PhysicalExpr {
     private int index;
 
-    public ColumnExpr(int index) {
+    public PhysicalColumnExpr(int index) {
         this.index = index;
     }
 

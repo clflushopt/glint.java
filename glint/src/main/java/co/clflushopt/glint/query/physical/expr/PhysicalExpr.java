@@ -8,7 +8,7 @@ import co.clflushopt.glint.types.RecordBatch;
  *
  * Expr
  */
-public interface Expr {
+public interface PhysicalExpr {
 
     /**
      * Evaluate the expression.

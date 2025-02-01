@@ -8,16 +8,16 @@ import java.util.List;
 import org.junit.Test;
 
 import co.clflushopt.glint.query.functional.Accumulator;
-import co.clflushopt.glint.query.physical.expr.ColumnExpr;
-import co.clflushopt.glint.query.physical.expr.MaxExpr;
-import co.clflushopt.glint.query.physical.expr.MinExpr;
-import co.clflushopt.glint.query.physical.expr.SumExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalColumnExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalMaxExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalMinExpr;
+import co.clflushopt.glint.query.physical.expr.PhysicalSumExpr;
 
 public class AggregateExprTest {
 
     @Test
     public void testMinAccumulator() {
-        MinExpr minExpr = new MinExpr(new ColumnExpr(0));
+        PhysicalMinExpr minExpr = new PhysicalMinExpr(new PhysicalColumnExpr(0));
         Accumulator accumulator = minExpr.getAccumulator();
 
         List<Integer> values = Arrays.asList(10, 14, 4);
@@ -30,7 +30,7 @@ public class AggregateExprTest {
 
     @Test
     public void testMaxAccumulator() {
-        MaxExpr maxExpr = new MaxExpr(new ColumnExpr(0));
+        PhysicalMaxExpr maxExpr = new PhysicalMaxExpr(new PhysicalColumnExpr(0));
         Accumulator accumulator = maxExpr.getAccumulator();
 
         List<Integer> values = Arrays.asList(10, 14, 4);
@@ -43,7 +43,7 @@ public class AggregateExprTest {
 
     @Test
     public void testSumAccumulator() {
-        SumExpr sumExpr = new SumExpr(new ColumnExpr(0));
+        PhysicalSumExpr sumExpr = new PhysicalSumExpr(new PhysicalColumnExpr(0));
         Accumulator accumulator = sumExpr.getAccumulator();
 
         List<Integer> values = Arrays.asList(10, 14, 4);

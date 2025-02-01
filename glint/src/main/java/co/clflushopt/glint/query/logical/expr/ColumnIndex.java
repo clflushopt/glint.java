@@ -13,6 +13,10 @@ public class ColumnIndex implements LogicalExpr {
         this.index = index;
     }
 
+    public Integer getIndex() {
+        return index;
+    }
+
     @Override
     public Field toField(LogicalPlan plan) {
         return plan.getSchema().getFields().get(this.index);

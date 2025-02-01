@@ -25,6 +25,18 @@ public class Aggregate implements LogicalPlan {
         this.aggregateExpr = aggregates;
     }
 
+    public List<LogicalExpr> getGroupExpr() {
+        return groupExpr;
+    }
+
+    public List<AggregateExpr> getAggregateExpr() {
+        return aggregateExpr;
+    }
+
+    public LogicalPlan getInput() {
+        return input;
+    }
+
     @Override
     public Schema getSchema() {
         return new Schema(Stream

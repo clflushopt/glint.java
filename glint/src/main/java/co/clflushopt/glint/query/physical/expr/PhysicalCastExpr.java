@@ -14,8 +14,8 @@ import co.clflushopt.glint.types.RecordBatch;
  *
  * CastExpr
  */
-public class CastExpr implements Expr {
-    private Expr expression;
+public class PhysicalCastExpr implements PhysicalExpr {
+    private PhysicalExpr expression;
     private ArrowType type;
 
     /**
@@ -23,7 +23,7 @@ public class CastExpr implements Expr {
      *
      * @param expression the expression to cast.
      */
-    public CastExpr(Expr expression, ArrowType type) {
+    public PhysicalCastExpr(PhysicalExpr expression, ArrowType type) {
         this.expression = expression;
         this.type = type;
     }
