@@ -1,18 +1,17 @@
-# Glint: SQL Query Compiler for Java
+# Glint: Vectorized and Code Generation Driven Query Engine in Java
 
 > Briefly flashing the powers of query compilation without the machinery of a spark.
 
 ## Description
 
-Glint is a SQL query engine with query compilation support in Java.
+Glint is a minimal SQL query engine with vectorized and query compilation support in Java.
 
 Following in the tradition of the new movement of modular database architectures
 Glint has no catalog or data management; its only capability is turning SQL queries
 into Java code that is then compiled and executed; think Calcite not Spark.
 
 In order to make it fun, at least for tests and benchmark purposes, we did plug
-an Arrow compatible API with support for Memory, CSV and Partquet data sources
-allowing us to run against most benchmark datasets out there.
+an Arrow compatible API with support for Memory, CSV and Parquet data sources.
 
 ## Architecture
 
@@ -22,7 +21,7 @@ aspect of a query compiler is studied or demonstrated.
 
 But before all of this, let's start with a brief tour of query engines in general this
 will allow us to frame the architecture discussion in a concrete context by understanding
-the fundamental components and patterns that shape modern query processing systems. 
+the fundamental components and patterns that shape modern query processing systems.
 
 ### Query Engine Architecture and Paradigms
 
@@ -42,7 +41,7 @@ SELECT col1 FROM table WHERE col2 > 10
 ```
 
 Driving the execution of the above model are two execution paradigms: vectorized and compiled.
-Vectorized execution processes data in batches (vectors) to better utilize CPU caches and 
+Vectorized execution processes data in batches (vectors) to better utilize CPU caches and
 enable SIMD operations.
 
 Instead of processing one row at a time like the Volcano model, it handles chunks of data
@@ -75,9 +74,63 @@ complexity.
 
 Each approach has its trade-offs: Vectorized engines have lower compilation overhead and are
 more flexible for dynamic workloads, while compiled engines can achieve better absolute performance
-for stable queries by generating specialized code paths. 
+for stable queries by generating specialized code paths.
 
 In a paper by Timo Kersten and others - [Everything You Always Wanted to Know About Compiled and Vectorized Queries But Were Afraid to Ask](https://www.vldb.org/pvldb/vol11/p2209-kersten.pdf) they showed that the performance of
 both approaches was pretty much on-par, with the results showing that data-centric code generation
 being slightly better at compute intensive queries and vectorized being better at memory-bound
 queries.
+
+### Implementation Details
+
+```
+
+┌─────────────────────────────────────────────────────────┐
+│                    DataFrame API                        │
+├─────────────────────────────────────────────────────────┤
+│                  Logical Planning                       │
+│  ┌─────────────┐   ┌──────────┐    ┌───────────────┐    │
+│  │     Scan    │   │  Join    │    │   Project     │    │
+│  └─────────────┘   └──────────┘    └───────────────┘    │
+├─────────────────────────────────────────────────────────┤
+│                 Physical Planning                       │
+│  ┌─────────────┐   ┌─────────┐      ┌─────────────┐     │
+│  │ TableScan   │   │HashJoin │      │Project      │     │
+│  └─────────────┘   └─────────┘      └─────────────┘     │
+├─────────────────────────────────────────────────────────┤
+│                    Execution                            │
+│  ┌─────────────┐   ┌─────────┐      ┌─────────────┐     │
+│  │ScanOperator │   │ JoinOp  │      │  ProjectOp  │     │
+│  └─────────────┘   └─────────┘      └─────────────┘     │
+└─────────────────────────────────────────────────────────┘
+           │              │                │
+           └──────────────┼────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│                 Apache Arrow                            │
+└─────────────────────────────────────────────────────────┘
+
+```
+
+- Apache Arrow Integration:
+  - Uses Arrow's columnar memory format throughout the engine
+  - Leverages Arrow's VectorSchemaRoot for batch processing
+  - Implements custom FieldVector wrappers for type safety
+  - Enables zero-copy data sharing between operations
+
+- Three-Layer Architecture:
+  - Logical Plans: Abstract representation of operations (WHAT)
+  - Physical Plans: Concrete implementation strategies (HOW)
+  - Operators: Actual execution code using Volcano model
+
+- DataFrame API:
+  - Provides a fluent interface for query construction
+  - Supports common operations (select, filter, join)
+  - Handles schema inference and validation
+  - Abstracts query planning complexity from users
+
+- Query Execution:
+  - Uses vectorizewd Volcano-style iterator model
+  - Processes data in batches for efficiency
+  - Supports push-down optimizations
+  - Implements memory-efficient operations
