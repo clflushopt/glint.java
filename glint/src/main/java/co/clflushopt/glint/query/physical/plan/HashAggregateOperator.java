@@ -60,7 +60,6 @@ public class HashAggregateOperator implements PhysicalPlan {
         Iterator<RecordBatch> inputIter = input.execute();
         while (inputIter.hasNext()) {
             RecordBatch batch = inputIter.next();
-
             // Evaluate grouping expressions
             List<ColumnVector> groupKeys = groupByExpr.stream().map(expr -> expr.eval(batch))
                     .collect(Collectors.toList());
