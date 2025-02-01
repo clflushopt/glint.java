@@ -63,13 +63,6 @@ public abstract class BooleanExpr implements Expr {
         throw new IllegalStateException("Cannot convert to boolean: " + value);
     }
 
-    private static String toString(Object value) {
-        if (value instanceof byte[]) {
-            return new String((byte[]) value);
-        }
-        return value.toString();
-    }
-
     public static class AndExpression extends BooleanExpr {
         public AndExpression(Expr left, Expr right) {
             super(left, right);
