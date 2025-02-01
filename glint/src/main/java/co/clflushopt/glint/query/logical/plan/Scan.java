@@ -32,6 +32,10 @@ public class Scan implements LogicalPlan {
         return projections;
     }
 
+    public String getPath() {
+        return path;
+    }
+
     @Override
     public Schema getSchema() {
         return schema;
