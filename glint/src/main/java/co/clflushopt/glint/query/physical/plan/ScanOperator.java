@@ -1,5 +1,6 @@
 package co.clflushopt.glint.query.physical.plan;
 
+import java.util.Iterator;
 import java.util.List;
 
 import co.clflushopt.glint.datasource.DataSource;
@@ -30,8 +31,8 @@ public class ScanOperator implements PhysicalPlan {
     }
 
     @Override
-    public Iterable<RecordBatch> execute() {
-        return dataSource.scan(projection);
+    public Iterator<RecordBatch> execute() {
+        return dataSource.scan(projection).iterator();
     }
 
     @Override

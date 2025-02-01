@@ -1,10 +1,11 @@
 package co.clflushopt.glint.query.physical.plan;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import co.clflushopt.glint.query.physical.expr.Expr;
+import co.clflushopt.glint.types.ColumnVector;
 import co.clflushopt.glint.types.RecordBatch;
 import co.clflushopt.glint.types.Schema;
 
@@ -31,17 +32,23 @@ public class ProjectionOperator implements PhysicalPlan {
     }
 
     @Override
-    public Iterable<RecordBatch> execute() {
-        var iter = input.execute().iterator();
-        List<RecordBatch> result = new ArrayList<>();
+    public Iterator<RecordBatch> execute() {
+        Iterator<RecordBatch> inputIterator = input.execute();
 
-        while (iter.hasNext()) {
-            var columns = this.projections.stream().map(expr -> expr.eval(iter.next()))
-                    .collect(Collectors.toList());
-            result.add(new RecordBatch(schema, columns));
-        }
+        return new Iterator<RecordBatch>() {
+            @Override
+            public boolean hasNext() {
+                return inputIterator.hasNext();
+            }
 
-        return result;
+            @Override
+            public RecordBatch next() {
+                RecordBatch batch = inputIterator.next();
+                List<ColumnVector> columns = projections.stream()
+                        .map(expression -> expression.eval(batch)).collect(Collectors.toList());
+                return new RecordBatch(schema, columns);
+            }
+        };
     }
 
     @Override

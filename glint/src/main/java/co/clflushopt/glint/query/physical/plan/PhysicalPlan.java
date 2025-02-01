@@ -1,5 +1,6 @@
 package co.clflushopt.glint.query.physical.plan;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -25,7 +26,7 @@ public interface PhysicalPlan {
      * is equivalent to `next()` in the Volcano paper.
      *
      */
-    public Iterable<RecordBatch> execute();
+    public Iterator<RecordBatch> execute();
 
     /**
      * Returns the pipeline structure of the plan.
