@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  * SQL Select statements.
  *
  */
-public class SqlSelect implements SqlStatement {
+public class SqlSelectStmt implements SqlStatement {
     private final List<SqlExpression> projection;
     private final SqlExpression selection;
     private final List<SqlExpression> groupBy;
@@ -16,7 +16,7 @@ public class SqlSelect implements SqlStatement {
     private final SqlExpression having;
     private final String tableName;
 
-    public SqlSelect(List<SqlExpression> projection, SqlExpression selection,
+    public SqlSelectStmt(List<SqlExpression> projection, SqlExpression selection,
             List<SqlExpression> groupBy, List<SqlExpression> orderBy, SqlExpression having,
             String tableName) {
         this.projection = projection;
@@ -85,7 +85,7 @@ public class SqlSelect implements SqlStatement {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        SqlSelect sqlSelect = (SqlSelect) o;
+        SqlSelectStmt sqlSelect = (SqlSelectStmt) o;
         return Objects.equals(projection, sqlSelect.projection)
                 && Objects.equals(selection, sqlSelect.selection)
                 && Objects.equals(groupBy, sqlSelect.groupBy)

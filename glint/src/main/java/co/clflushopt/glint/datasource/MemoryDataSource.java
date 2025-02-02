@@ -27,8 +27,8 @@ public class MemoryDataSource implements DataSource {
 
     @Override
     public List<RecordBatch> scan(List<String> projection) {
-        var projectionIndices = projection.stream()
-                .map(name -> Iterables.indexOf(schema.getFields(), field -> field.name() == name))
+        var projectionIndices = projection.stream().map(
+                name -> Iterables.indexOf(schema.getFields(), field -> field.name().equals(name)))
                 .collect(Collectors.toList());
 
         return records.stream()

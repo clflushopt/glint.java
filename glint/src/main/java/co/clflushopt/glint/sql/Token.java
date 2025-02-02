@@ -32,11 +32,11 @@ public class Token {
     @Override
     public String toString() {
         String typeType = "";
-        if (type instanceof Keyword)
+        if (type instanceof SqlKeyword)
             typeType = "Keyword";
         else if (type instanceof Symbol)
             typeType = "Symbol";
-        else if (type instanceof Literal)
+        else if (type instanceof SqlLiteral)
             typeType = "Literal";
 
         return String.format("Token(\"%s\", %s.%s, %d)", text, typeType, type, endOffset);

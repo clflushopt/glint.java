@@ -7,10 +7,10 @@ import co.clflushopt.glint.types.Field;
 /**
  * Logical expression representing a Double literal.
  */
-public class LiteralDouble implements LogicalExpr {
+public class LogicalLiteralDouble implements LogicalExpr {
     private Double value;
 
-    public LiteralDouble(Double value) {
+    public LogicalLiteralDouble(Double value) {
         this.value = value;
     }
 

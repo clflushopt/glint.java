@@ -9,10 +9,10 @@ import co.clflushopt.glint.types.Field;
  *
  * ColumnExpr
  */
-public class ColumnExpr implements LogicalExpr {
+public class LogicalColumnExpr implements LogicalExpr {
     private String name;
 
-    public ColumnExpr(String name) {
+    public LogicalColumnExpr(String name) {
         this.name = name;
     }
 
@@ -22,7 +22,7 @@ public class ColumnExpr implements LogicalExpr {
 
     @Override
     public Field toField(LogicalPlan plan) {
-        return plan.getSchema().getFields().stream().filter(field -> field.name() == name)
+        return plan.getSchema().getFields().stream().filter(field -> field.name().equals(name))
                 .findFirst().get();
     }
 

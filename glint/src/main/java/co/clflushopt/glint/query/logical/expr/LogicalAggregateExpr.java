@@ -9,11 +9,11 @@ import co.clflushopt.glint.types.Field;
  *
  * AggregateExpr
  */
-public abstract class AggregateExpr implements LogicalExpr {
+public abstract class LogicalAggregateExpr implements LogicalExpr {
     protected final String name;
     protected final LogicalExpr expr;
 
-    public AggregateExpr(String name, LogicalExpr expr) {
+    public LogicalAggregateExpr(String name, LogicalExpr expr) {
         this.name = name;
         this.expr = expr;
     }
@@ -36,25 +36,25 @@ public abstract class AggregateExpr implements LogicalExpr {
      * Sum aggregation operator.
      *
      */
-    public static class Sum extends AggregateExpr {
+    public static class Sum extends LogicalAggregateExpr {
         public Sum(LogicalExpr input) {
             super("SUM", input);
         }
     }
 
-    public static class Min extends AggregateExpr {
+    public static class Min extends LogicalAggregateExpr {
         public Min(LogicalExpr input) {
             super("MIN", input);
         }
     }
 
-    public static class Max extends AggregateExpr {
+    public static class Max extends LogicalAggregateExpr {
         public Max(LogicalExpr input) {
             super("MAX", input);
         }
     }
 
-    public static class Avg extends AggregateExpr {
+    public static class Avg extends LogicalAggregateExpr {
         public Avg(LogicalExpr input) {
             super("AVG", input);
         }
@@ -66,7 +66,7 @@ public abstract class AggregateExpr implements LogicalExpr {
         }
     }
 
-    public static class Count extends AggregateExpr {
+    public static class Count extends LogicalAggregateExpr {
         public Count(LogicalExpr input) {
             super("COUNT", input);
         }
@@ -83,7 +83,7 @@ public abstract class AggregateExpr implements LogicalExpr {
         }
     }
 
-    public static class CountDistinct extends AggregateExpr {
+    public static class CountDistinct extends LogicalAggregateExpr {
         public CountDistinct(LogicalExpr input) {
             super("COUNT_DISTINCT", input);
         }
@@ -100,23 +100,23 @@ public abstract class AggregateExpr implements LogicalExpr {
     }
 
     // Factory methods for creating aggregate expressions
-    public static AggregateExpr sum(LogicalExpr input) {
+    public static LogicalAggregateExpr sum(LogicalExpr input) {
         return new Sum(input);
     }
 
-    public static AggregateExpr min(LogicalExpr input) {
+    public static LogicalAggregateExpr min(LogicalExpr input) {
         return new Min(input);
     }
 
-    public static AggregateExpr max(LogicalExpr input) {
+    public static LogicalAggregateExpr max(LogicalExpr input) {
         return new Max(input);
     }
 
-    public static AggregateExpr avg(LogicalExpr input) {
+    public static LogicalAggregateExpr avg(LogicalExpr input) {
         return new Avg(input);
     }
 
-    public static AggregateExpr count(LogicalExpr input) {
+    public static LogicalAggregateExpr count(LogicalExpr input) {
         return new Count(input);
     }
 }

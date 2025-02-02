@@ -6,12 +6,12 @@ import java.util.Objects;
  * SQL binary expressions.
  *
  */
-public class SqlBinaryExpression implements SqlExpression {
+public class SqlBinaryExpr implements SqlExpression {
     private final SqlExpression left;
     private final String operator;
     private final SqlExpression right;
 
-    public SqlBinaryExpression(SqlExpression left, String operator, SqlExpression right) {
+    public SqlBinaryExpr(SqlExpression left, String operator, SqlExpression right) {
         this.left = left;
         this.operator = operator;
         this.right = right;
@@ -40,7 +40,7 @@ public class SqlBinaryExpression implements SqlExpression {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        SqlBinaryExpression that = (SqlBinaryExpression) o;
+        SqlBinaryExpr that = (SqlBinaryExpr) o;
         return Objects.equals(left, that.left) && Objects.equals(operator, that.operator)
                 && Objects.equals(right, that.right);
     }

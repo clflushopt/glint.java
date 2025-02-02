@@ -8,9 +8,9 @@ import co.clflushopt.glint.types.Field;
  *
  * MathExpr
  */
-public class MathExpr extends BinaryExpr implements LogicalExpr {
+public class LogicalMathExpr extends LogicalBinaryExpr implements LogicalExpr {
 
-    public MathExpr(String name, String operator, LogicalExpr lhs, LogicalExpr rhs) {
+    public LogicalMathExpr(String name, String operator, LogicalExpr lhs, LogicalExpr rhs) {
         super(name, operator, lhs, rhs);
     }
 
@@ -26,8 +26,8 @@ public class MathExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static MathExpr Add(LogicalExpr lhs, LogicalExpr rhs) {
-        return new MathExpr("add", "+", lhs, rhs);
+    public static LogicalMathExpr Add(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalMathExpr("add", "+", lhs, rhs);
     }
 
     /**
@@ -37,8 +37,8 @@ public class MathExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static MathExpr Sub(LogicalExpr lhs, LogicalExpr rhs) {
-        return new MathExpr("sub", "-", lhs, rhs);
+    public static LogicalMathExpr Sub(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalMathExpr("sub", "-", lhs, rhs);
     }
 
     /**
@@ -48,8 +48,8 @@ public class MathExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static MathExpr Mul(LogicalExpr lhs, LogicalExpr rhs) {
-        return new MathExpr("mul", "*", lhs, rhs);
+    public static LogicalMathExpr Mul(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalMathExpr("mul", "*", lhs, rhs);
     }
 
     /**
@@ -59,7 +59,7 @@ public class MathExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static MathExpr Div(LogicalExpr lhs, LogicalExpr rhs) {
-        return new MathExpr("div", "/", lhs, rhs);
+    public static LogicalMathExpr Div(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalMathExpr("div", "/", lhs, rhs);
     }
 }

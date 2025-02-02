@@ -11,11 +11,11 @@ import co.clflushopt.glint.types.Field;
  *
  * CastExpr
  */
-public class CastExpr implements LogicalExpr {
+public class LogicalCastExpr implements LogicalExpr {
     private LogicalExpr expr;
     private ArrowType dataType;
 
-    public CastExpr(LogicalExpr expr, ArrowType dataType) {
+    public LogicalCastExpr(LogicalExpr expr, ArrowType dataType) {
         this.expr = expr;
         this.dataType = dataType;
     }

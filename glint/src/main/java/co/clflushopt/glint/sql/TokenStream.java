@@ -50,7 +50,8 @@ public class TokenStream {
         Token peek = peek();
         logger.fine("consumeKeyword('" + keyword + "') next token is " + peek);
 
-        if (peek != null && peek.getType() instanceof Keyword && peek.getText().equals(keyword)) {
+        if (peek != null && peek.getType() instanceof SqlKeyword
+                && peek.getText().equals(keyword)) {
             index++;
             logger.fine("consumeKeyword() returning true");
             return true;

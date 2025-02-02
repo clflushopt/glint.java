@@ -7,7 +7,7 @@ import java.util.Map;
  * SQL keywords.
  *
  */
-public enum Keyword implements TokenType {
+public enum SqlKeyword implements TokenType {
     SCHEMA, DATABASE, TABLE, COLUMN, VIEW, INDEX, TRIGGER, PROCEDURE, TABLESPACE, FUNCTION,
     SEQUENCE, CURSOR, FROM, TO, OF, IF, ON, FOR, WHILE, DO, NO, BY, WITH, WITHOUT, TRUE, FALSE,
     TEMPORARY, TEMP, COMMENT, CREATE, REPLACE, BEFORE, AFTER, INSTEAD, EACH, ROW, STATEMENT,
@@ -28,16 +28,16 @@ public enum Keyword implements TokenType {
      * Keyword lookups.
      *
      */
-    private static final Map<String, Keyword> KEYWORDS;
+    private static final Map<String, SqlKeyword> KEYWORDS;
 
     static {
         KEYWORDS = new HashMap<>();
-        for (Keyword keyword : values()) {
+        for (SqlKeyword keyword : values()) {
             KEYWORDS.put(keyword.name(), keyword);
         }
     }
 
-    public static Keyword textOf(String text) {
+    public static SqlKeyword textOf(String text) {
         return KEYWORDS.get(text.toUpperCase());
     }
 }

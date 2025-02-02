@@ -2,7 +2,7 @@ package co.clflushopt.glint.dataframe;
 
 import java.util.List;
 
-import co.clflushopt.glint.query.logical.expr.AggregateExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr;
 import co.clflushopt.glint.query.logical.expr.LogicalExpr;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.types.Schema;
@@ -33,7 +33,7 @@ public interface DataFrame {
      *
      * @return aggregated tuples as a dataframe.
      */
-    public DataFrame aggregate(List<LogicalExpr> groupBy, List<AggregateExpr> aggregateExpr);
+    public DataFrame aggregate(List<LogicalExpr> groupBy, List<LogicalAggregateExpr> aggregateExpr);
 
     /**
      * Returns the schema of the tuples in the dataframe.

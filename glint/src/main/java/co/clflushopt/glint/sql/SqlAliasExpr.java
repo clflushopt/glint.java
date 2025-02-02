@@ -6,11 +6,11 @@ import java.util.Objects;
  * SQL alias expressions.
  *
  */
-public class SqlAlias implements SqlExpression {
+public class SqlAliasExpr implements SqlExpression {
     private final SqlExpression expr;
     private final SqlIdentifier alias;
 
-    public SqlAlias(SqlExpression expr, SqlIdentifier alias) {
+    public SqlAliasExpr(SqlExpression expr, SqlIdentifier alias) {
         this.expr = expr;
         this.alias = alias;
     }
@@ -34,7 +34,7 @@ public class SqlAlias implements SqlExpression {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        SqlAlias sqlAlias = (SqlAlias) o;
+        SqlAliasExpr sqlAlias = (SqlAliasExpr) o;
         return Objects.equals(expr, sqlAlias.expr) && Objects.equals(alias, sqlAlias.alias);
     }
 

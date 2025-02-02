@@ -30,11 +30,11 @@ public class Parser {
         int precedence;
         TokenType type = token.getType();
 
-        if (type == Keyword.AS || type == Keyword.ASC || type == Keyword.DESC) {
+        if (type == SqlKeyword.AS || type == SqlKeyword.ASC || type == SqlKeyword.DESC) {
             precedence = 10;
-        } else if (type == Keyword.OR) {
+        } else if (type == SqlKeyword.OR) {
             precedence = 20;
-        } else if (type == Keyword.AND) {
+        } else if (type == SqlKeyword.AND) {
             precedence = 30;
         } else if (type == Symbol.LT || type == Symbol.LT_EQ || type == Symbol.EQ
                 || type == Symbol.BANG_EQ || type == Symbol.GT_EQ || type == Symbol.GT) {
@@ -63,21 +63,21 @@ public class Parser {
         SqlExpression expr;
         TokenType type = token.getType();
 
-        if (type == Keyword.SELECT) {
+        if (type == SqlKeyword.SELECT) {
             expr = parseSelect();
-        } else if (type == Keyword.CAST) {
+        } else if (type == SqlKeyword.CAST) {
             expr = parseCast();
-        } else if (type == Keyword.MAX) {
+        } else if (type == SqlKeyword.MAX) {
             expr = new SqlIdentifier(token.getText());
-        } else if (type == Keyword.INT || type == Keyword.DOUBLE) {
+        } else if (type == SqlKeyword.INT || type == SqlKeyword.DOUBLE) {
             expr = new SqlIdentifier(token.getText());
-        } else if (type == Literal.IDENTIFIER) {
+        } else if (type == SqlLiteral.IDENTIFIER) {
             expr = new SqlIdentifier(token.getText());
-        } else if (type == Literal.STRING) {
+        } else if (type == SqlLiteral.STRING) {
             expr = new SqlString(token.getText());
-        } else if (type == Literal.LONG) {
+        } else if (type == SqlLiteral.LONG) {
             expr = new SqlLong(Long.parseLong(token.getText()));
-        } else if (type == Literal.DOUBLE) {
+        } else if (type == SqlLiteral.DOUBLE) {
             expr = new SqlDouble(Double.parseDouble(token.getText()));
         } else {
             throw new IllegalStateException("Unexpected token " + token);
@@ -100,16 +100,16 @@ public class Parser {
         if (type == Symbol.PLUS || type == Symbol.SUB || type == Symbol.STAR || type == Symbol.SLASH
                 || type == Symbol.EQ || type == Symbol.GT || type == Symbol.LT) {
             tokens.next(); // consume the token
-            expr = new SqlBinaryExpression(left, token.getText(), parse(precedence));
-        } else if (type == Keyword.AS) {
+            expr = new SqlBinaryExpr(left, token.getText(), parse(precedence));
+        } else if (type == SqlKeyword.AS) {
             tokens.next(); // consume the token
-            expr = new SqlAlias(left, parseIdentifier());
-        } else if (type == Keyword.AND || type == Keyword.OR) {
+            expr = new SqlAliasExpr(left, parseIdentifier());
+        } else if (type == SqlKeyword.AND || type == SqlKeyword.OR) {
             tokens.next(); // consume the token
-            expr = new SqlBinaryExpression(left, token.getText(), parse(precedence));
-        } else if (type == Keyword.ASC || type == Keyword.DESC) {
+            expr = new SqlBinaryExpr(left, token.getText(), parse(precedence));
+        } else if (type == SqlKeyword.ASC || type == SqlKeyword.DESC) {
             tokens.next();
-            expr = new SqlSort(left, type == Keyword.ASC);
+            expr = new SqlSort(left, type == SqlKeyword.ASC);
         } else if (type == Symbol.LEFT_PAREN) {
             if (left instanceof SqlIdentifier) {
                 tokens.next(); // consume the token
@@ -164,11 +164,11 @@ public class Parser {
             throw new RuntimeException("Expected expression in CAST");
         }
 
-        if (!(expr instanceof SqlAlias)) {
+        if (!(expr instanceof SqlAliasExpr)) {
             throw new IllegalStateException("Expected AS in CAST");
         }
 
-        SqlAlias alias = (SqlAlias) expr;
+        SqlAliasExpr alias = (SqlAliasExpr) expr;
 
         if (!tokens.consumeTokenType(Symbol.RIGHT_PAREN)) {
             throw new IllegalStateException("Expected right parenthesis");
@@ -177,7 +177,7 @@ public class Parser {
         return new SqlCast(alias.getExpr(), alias.getAlias());
     }
 
-    private SqlSelect parseSelect() {
+    private SqlSelectStmt parseSelect() {
         List<SqlExpression> projection = parseExprList();
 
         if (!tokens.consumeKeyword("FROM")) {
@@ -214,7 +214,8 @@ public class Parser {
             orderBy = parseOrder();
         }
 
-        return new SqlSelect(projection, filterExpr, groupBy, orderBy, havingExpr, table.getId());
+        return new SqlSelectStmt(projection, filterExpr, groupBy, orderBy, havingExpr,
+                table.getId());
     }
 
     private List<SqlExpression> parseExprList() {

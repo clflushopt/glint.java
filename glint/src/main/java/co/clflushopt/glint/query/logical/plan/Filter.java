@@ -11,11 +11,11 @@ import co.clflushopt.glint.types.Schema;
  *
  * Selection
  */
-public class Selection implements LogicalPlan {
+public class Filter implements LogicalPlan {
     private LogicalPlan input;
     private LogicalExpr expr;
 
-    public Selection(LogicalPlan input, LogicalExpr expr) {
+    public Filter(LogicalPlan input, LogicalExpr expr) {
         this.input = input;
         this.expr = expr;
     }

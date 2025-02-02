@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import co.clflushopt.glint.query.logical.plan.Aggregate;
+import co.clflushopt.glint.query.logical.plan.Filter;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.logical.plan.Projection;
 import co.clflushopt.glint.query.logical.plan.Scan;
-import co.clflushopt.glint.query.logical.plan.Selection;
 
 public class PredicatePushdownRule implements OptimizerRule {
 
@@ -23,12 +23,12 @@ public class PredicatePushdownRule implements OptimizerRule {
             var input = pushdown(projection.getInput(), columns);
             return new Projection(input, ((Projection) plan).getExpr());
         }
-        if (plan instanceof Selection) {
-            var selection = (Selection) plan;
+        if (plan instanceof Filter) {
+            var selection = (Filter) plan;
             var newColumns = new HashSet<>(columns);
             newColumns.addAll(ColumnExtractor.extractColumns(plan, selection.getExpr()));
             var input = pushdown(selection.getInput(), newColumns);
-            return new Selection(input, selection.getExpr());
+            return new Filter(input, selection.getExpr());
         }
         if (plan instanceof Aggregate) {
             var aggregate = (Aggregate) plan;

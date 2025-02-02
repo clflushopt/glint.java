@@ -72,7 +72,7 @@ public class BinaryExprTest {
 
     @Test
     public void testBooleanExprEquality() {
-        BooleanExpr expr = BooleanExpr.Eq(col1, col2);
+        LogicalBooleanExpr expr = LogicalBooleanExpr.Eq(col1, col2);
 
         assertEquals("eq", expr.getName());
         assertEquals("=", expr.getOperator());
@@ -83,7 +83,7 @@ public class BinaryExprTest {
 
     @Test
     public void testBooleanExprToField() {
-        BooleanExpr expr = BooleanExpr.Eq(col1, col2);
+        LogicalBooleanExpr expr = LogicalBooleanExpr.Eq(col1, col2);
         Field field = expr.toField(mockPlan);
 
         assertEquals("eq", field.name());
@@ -93,26 +93,26 @@ public class BinaryExprTest {
     @Test
     public void testAllComparisonOperators() {
         // Test creation and string representation of all comparison operators
-        assertEquals("col1 = col2", BooleanExpr.Eq(col1, col2).toString());
-        assertEquals("col1 != col2", BooleanExpr.Neq(col1, col2).toString());
-        assertEquals("col1 > col2", BooleanExpr.Gt(col1, col2).toString());
-        assertEquals("col1 >= col2", BooleanExpr.Gte(col1, col2).toString());
-        assertEquals("col1 < col2", BooleanExpr.Lt(col1, col2).toString());
-        assertEquals("col1 <= col2", BooleanExpr.Lte(col1, col2).toString());
+        assertEquals("col1 = col2", LogicalBooleanExpr.Eq(col1, col2).toString());
+        assertEquals("col1 != col2", LogicalBooleanExpr.Neq(col1, col2).toString());
+        assertEquals("col1 > col2", LogicalBooleanExpr.Gt(col1, col2).toString());
+        assertEquals("col1 >= col2", LogicalBooleanExpr.Gte(col1, col2).toString());
+        assertEquals("col1 < col2", LogicalBooleanExpr.Lt(col1, col2).toString());
+        assertEquals("col1 <= col2", LogicalBooleanExpr.Lte(col1, col2).toString());
     }
 
     @Test
     public void testLogicalOperators() {
         // Create some comparison expressions to use in logical operations
-        BooleanExpr eq = BooleanExpr.Eq(col1, col2);
-        BooleanExpr gt = BooleanExpr.Gt(col1, col2);
+        LogicalBooleanExpr eq = LogicalBooleanExpr.Eq(col1, col2);
+        LogicalBooleanExpr gt = LogicalBooleanExpr.Gt(col1, col2);
 
         // Test AND operator
-        BooleanExpr and = BooleanExpr.And(eq, gt);
+        LogicalBooleanExpr and = LogicalBooleanExpr.And(eq, gt);
         assertEquals("col1 = col2 AND col1 > col2", and.toString());
 
         // Test OR operator
-        BooleanExpr or = BooleanExpr.Or(eq, gt);
+        LogicalBooleanExpr or = LogicalBooleanExpr.Or(eq, gt);
         assertEquals("col1 = col2 OR col1 > col2", or.toString());
     }
 
@@ -120,11 +120,11 @@ public class BinaryExprTest {
     public void testComplexExpressionTree() {
         // Build a more complex expression tree: (col1 = col2) AND (col1 > col2 OR col1
         // < col2)
-        BooleanExpr eq = BooleanExpr.Eq(col1, col2);
-        BooleanExpr gt = BooleanExpr.Gt(col1, col2);
-        BooleanExpr lt = BooleanExpr.Lt(col1, col2);
-        BooleanExpr or = BooleanExpr.Or(gt, lt);
-        BooleanExpr and = BooleanExpr.And(eq, or);
+        LogicalBooleanExpr eq = LogicalBooleanExpr.Eq(col1, col2);
+        LogicalBooleanExpr gt = LogicalBooleanExpr.Gt(col1, col2);
+        LogicalBooleanExpr lt = LogicalBooleanExpr.Lt(col1, col2);
+        LogicalBooleanExpr or = LogicalBooleanExpr.Or(gt, lt);
+        LogicalBooleanExpr and = LogicalBooleanExpr.And(eq, or);
 
         String expected = "col1 = col2 AND col1 > col2 OR col1 < col2";
         assertEquals(expected, and.toString());
@@ -139,13 +139,13 @@ public class BinaryExprTest {
     // CastExpr Tests
     @Test
     public void testCastExprToString() {
-        CastExpr cast = new CastExpr(intExpr, ArrowTypes.Int64Type);
+        LogicalCastExpr cast = new LogicalCastExpr(intExpr, ArrowTypes.Int64Type);
         assertEquals("CAST(age AS INT64)", cast.toString());
     }
 
     @Test
     public void testCastExprField() {
-        CastExpr cast = new CastExpr(intExpr, ArrowTypes.Int64Type);
+        LogicalCastExpr cast = new LogicalCastExpr(intExpr, ArrowTypes.Int64Type);
         Field field = cast.toField(mockPlan);
 
         assertEquals("mock", field.name());
@@ -155,11 +155,11 @@ public class BinaryExprTest {
     @Test
     public void testCastExprMultipleTypes() {
         // Test casting between different types
-        CastExpr intToString = new CastExpr(intExpr, ArrowTypes.StringType);
+        LogicalCastExpr intToString = new LogicalCastExpr(intExpr, ArrowTypes.StringType);
         assertEquals("CAST(age AS STRING)", intToString.toString());
         assertEquals(ArrowTypes.StringType, intToString.toField(mockPlan).dataType());
 
-        CastExpr stringToInt = new CastExpr(stringExpr, ArrowTypes.Int32Type);
+        LogicalCastExpr stringToInt = new LogicalCastExpr(stringExpr, ArrowTypes.Int32Type);
         assertEquals("CAST(name AS INT32)", stringToInt.toString());
         assertEquals(ArrowTypes.Int32Type, stringToInt.toField(mockPlan).dataType());
     }
@@ -167,8 +167,8 @@ public class BinaryExprTest {
     @Test
     public void testNestedCastExpr() {
         // Test nested casts (e.g., CAST(CAST(x AS type1) AS type2))
-        CastExpr innerCast = new CastExpr(intExpr, ArrowTypes.Int64Type);
-        CastExpr outerCast = new CastExpr(innerCast, ArrowTypes.DoubleType);
+        LogicalCastExpr innerCast = new LogicalCastExpr(intExpr, ArrowTypes.Int64Type);
+        LogicalCastExpr outerCast = new LogicalCastExpr(innerCast, ArrowTypes.DoubleType);
 
         assertEquals("CAST(CAST(age AS INT64) AS DOUBLE)", outerCast.toString());
         assertEquals(ArrowTypes.DoubleType, outerCast.toField(mockPlan).dataType());
@@ -177,32 +177,31 @@ public class BinaryExprTest {
     // AliasExpr Tests
     @Test
     public void testAliasExprToString() {
-        AliasExpr alias = new AliasExpr(intExpr, "user_age");
+        LogicalAliasExpr alias = new LogicalAliasExpr(intExpr, "user_age");
         assertEquals("age AS user_age", alias.toString());
     }
 
     @Test
     public void testAliasExprField() {
-        AliasExpr alias = new AliasExpr(intExpr, "user_age");
+        LogicalAliasExpr alias = new LogicalAliasExpr(intExpr, "user_age");
         Field field = alias.toField(mockPlan);
 
-        // Field should maintain original name and type
-        assertEquals("mock", field.name());
+        assertEquals("user_age", field.name());
         assertEquals(ArrowTypes.Int32Type, field.dataType());
     }
 
     @Test
     public void testAliasExprWithDifferentTypes() {
         // Test aliasing expressions of different types
-        AliasExpr intAlias = new AliasExpr(intExpr, "user_age");
+        LogicalAliasExpr intAlias = new LogicalAliasExpr(intExpr, "user_age");
         assertEquals(ArrowTypes.Int32Type, intAlias.toField(mockPlan).dataType());
     }
 
     @Test
     public void testNestedAliasExpr() {
         // Test nested aliases (although this might be rare in practice)
-        AliasExpr innerAlias = new AliasExpr(intExpr, "years");
-        AliasExpr outerAlias = new AliasExpr(innerAlias, "age_in_years");
+        LogicalAliasExpr innerAlias = new LogicalAliasExpr(intExpr, "years");
+        LogicalAliasExpr outerAlias = new LogicalAliasExpr(innerAlias, "age_in_years");
 
         assertEquals("age AS years AS age_in_years", outerAlias.toString());
         assertEquals(ArrowTypes.Int32Type, outerAlias.toField(mockPlan).dataType());
@@ -211,8 +210,8 @@ public class BinaryExprTest {
     @Test
     public void testAliasWithCastExpr() {
         // Test combining alias with cast
-        CastExpr cast = new CastExpr(intExpr, ArrowTypes.Int64Type);
-        AliasExpr alias = new AliasExpr(cast, "big_age");
+        LogicalCastExpr cast = new LogicalCastExpr(intExpr, ArrowTypes.Int64Type);
+        LogicalAliasExpr alias = new LogicalAliasExpr(cast, "big_age");
 
         assertEquals("CAST(age AS INT64) AS big_age", alias.toString());
         assertEquals(ArrowTypes.Int64Type, cast.toField(mockPlan).dataType());

@@ -6,10 +6,10 @@ import co.clflushopt.glint.types.Field;
 /**
  * Logical expression representing a referenced column by an index. ColumnIndex
  */
-public class ColumnIndex implements LogicalExpr {
+public class LogicalColumnIndex implements LogicalExpr {
     private Integer index;
 
-    public ColumnIndex(Integer index) {
+    public LogicalColumnIndex(Integer index) {
         this.index = index;
     }
 

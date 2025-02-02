@@ -34,7 +34,7 @@ public interface LogicalExpr {
      * @return A boolean expression representing the equality comparison
      */
     default LogicalExpr eq(LogicalExpr other) {
-        return BooleanExpr.Eq(this, other);
+        return LogicalBooleanExpr.Eq(this, other);
     }
 
     /**
@@ -52,7 +52,7 @@ public interface LogicalExpr {
      * @return A boolean expression representing the inequality comparison
      */
     default LogicalExpr neq(LogicalExpr other) {
-        return BooleanExpr.Neq(this, other);
+        return LogicalBooleanExpr.Neq(this, other);
     }
 
     /**
@@ -70,7 +70,7 @@ public interface LogicalExpr {
      * @return A boolean expression representing the greater-than comparison
      */
     default LogicalExpr gt(LogicalExpr other) {
-        return BooleanExpr.Gt(this, other);
+        return LogicalBooleanExpr.Gt(this, other);
     }
 
     /**
@@ -89,7 +89,7 @@ public interface LogicalExpr {
      * @return A binary expression representing the multiplication
      */
     default LogicalExpr mult(LogicalExpr other) {
-        return MathExpr.Mul(this, other);
+        return LogicalMathExpr.Mul(this, other);
     }
 
     /**
@@ -108,7 +108,7 @@ public interface LogicalExpr {
      * @return A binary expression representing the division
      */
     default LogicalExpr div(LogicalExpr other) {
-        return MathExpr.Div(this, other);
+        return LogicalMathExpr.Div(this, other);
     }
 
     /**
@@ -126,7 +126,7 @@ public interface LogicalExpr {
      * @param alias The name to assign to this expression's result
      * @return An aliased expression
      */
-    default AliasExpr alias(String alias) {
-        return new AliasExpr(this, alias);
+    default LogicalAliasExpr alias(String alias) {
+        return new LogicalAliasExpr(this, alias);
     }
 }

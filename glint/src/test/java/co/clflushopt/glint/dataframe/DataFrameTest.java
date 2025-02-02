@@ -11,13 +11,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import co.clflushopt.glint.datasource.CsvDataSource;
-import co.clflushopt.glint.query.logical.expr.AggregateExpr.Count;
-import co.clflushopt.glint.query.logical.expr.AggregateExpr.Max;
-import co.clflushopt.glint.query.logical.expr.AggregateExpr.Min;
-import co.clflushopt.glint.query.logical.expr.ColumnExpr;
-import co.clflushopt.glint.query.logical.expr.LiteralDouble;
-import co.clflushopt.glint.query.logical.expr.LiteralString;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr.Count;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr.Max;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr.Min;
+import co.clflushopt.glint.query.logical.expr.LogicalColumnExpr;
 import co.clflushopt.glint.query.logical.expr.LogicalExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalLiteralDouble;
+import co.clflushopt.glint.query.logical.expr.LogicalLiteralString;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.logical.plan.Scan;
 import co.clflushopt.glint.types.ArrowTypes;
@@ -107,20 +107,20 @@ public class DataFrameTest {
      * Helper method to create a literal expression.
      */
     private static LogicalExpr lit(String value) {
-        return new LiteralString(value);
+        return new LogicalLiteralString(value);
     }
 
     /**
      * Helper method to create a literal expression.
      */
     private static LogicalExpr lit(double value) {
-        return new LiteralDouble(value);
+        return new LogicalLiteralDouble(value);
     }
 
     /**
      * Helper method to create a column reference expression.
      */
     private static LogicalExpr col(String name) {
-        return new ColumnExpr(name);
+        return new LogicalColumnExpr(name);
     }
 }

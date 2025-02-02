@@ -9,9 +9,9 @@ import co.clflushopt.glint.types.Field;
  *
  * BooleanBinaryExpr
  */
-public class BooleanExpr extends BinaryExpr implements LogicalExpr {
+public class LogicalBooleanExpr extends LogicalBinaryExpr implements LogicalExpr {
 
-    public BooleanExpr(String name, String operator, LogicalExpr lhs, LogicalExpr rhs) {
+    public LogicalBooleanExpr(String name, String operator, LogicalExpr lhs, LogicalExpr rhs) {
         super(name, operator, lhs, rhs);
     }
 
@@ -32,8 +32,8 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static BooleanExpr Eq(LogicalExpr lhs, LogicalExpr rhs) {
-        return new BooleanExpr("eq", "=", lhs, rhs);
+    public static LogicalBooleanExpr Eq(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalBooleanExpr("eq", "=", lhs, rhs);
     }
 
     /**
@@ -43,8 +43,8 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static BooleanExpr Neq(LogicalExpr lhs, LogicalExpr rhs) {
-        return new BooleanExpr("neq", "!=", lhs, rhs);
+    public static LogicalBooleanExpr Neq(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalBooleanExpr("neq", "!=", lhs, rhs);
     }
 
     /**
@@ -54,8 +54,8 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static BooleanExpr Gt(LogicalExpr lhs, LogicalExpr rhs) {
-        return new BooleanExpr("gt", ">", lhs, rhs);
+    public static LogicalBooleanExpr Gt(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalBooleanExpr("gt", ">", lhs, rhs);
     }
 
     /**
@@ -66,8 +66,8 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static BooleanExpr Gte(LogicalExpr lhs, LogicalExpr rhs) {
-        return new BooleanExpr("gte", ">=", lhs, rhs);
+    public static LogicalBooleanExpr Gte(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalBooleanExpr("gte", ">=", lhs, rhs);
     }
 
     /**
@@ -77,8 +77,8 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static BooleanExpr Lt(LogicalExpr lhs, LogicalExpr rhs) {
-        return new BooleanExpr("lt", "<", lhs, rhs);
+    public static LogicalBooleanExpr Lt(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalBooleanExpr("lt", "<", lhs, rhs);
     }
 
     /**
@@ -89,8 +89,8 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static BooleanExpr Lte(LogicalExpr lhs, LogicalExpr rhs) {
-        return new BooleanExpr("lte", "<=", lhs, rhs);
+    public static LogicalBooleanExpr Lte(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalBooleanExpr("lte", "<=", lhs, rhs);
     }
 
     /**
@@ -100,8 +100,8 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static BooleanExpr And(LogicalExpr lhs, LogicalExpr rhs) {
-        return new BooleanExpr("and", "AND", lhs, rhs);
+    public static LogicalBooleanExpr And(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalBooleanExpr("and", "AND", lhs, rhs);
     }
 
     /**
@@ -111,7 +111,7 @@ public class BooleanExpr extends BinaryExpr implements LogicalExpr {
      * @param rhs
      * @return
      */
-    public static BooleanExpr Or(LogicalExpr lhs, LogicalExpr rhs) {
-        return new BooleanExpr("or", "OR", lhs, rhs);
+    public static LogicalBooleanExpr Or(LogicalExpr lhs, LogicalExpr rhs) {
+        return new LogicalBooleanExpr("or", "OR", lhs, rhs);
     }
 }

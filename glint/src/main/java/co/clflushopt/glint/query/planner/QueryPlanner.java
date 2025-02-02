@@ -4,23 +4,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import co.clflushopt.glint.query.logical.expr.AggregateExpr.Max;
-import co.clflushopt.glint.query.logical.expr.AggregateExpr.Min;
-import co.clflushopt.glint.query.logical.expr.AggregateExpr.Sum;
-import co.clflushopt.glint.query.logical.expr.AliasExpr;
-import co.clflushopt.glint.query.logical.expr.BinaryExpr;
-import co.clflushopt.glint.query.logical.expr.CastExpr;
-import co.clflushopt.glint.query.logical.expr.ColumnExpr;
-import co.clflushopt.glint.query.logical.expr.ColumnIndex;
-import co.clflushopt.glint.query.logical.expr.LiteralDouble;
-import co.clflushopt.glint.query.logical.expr.LiteralLong;
-import co.clflushopt.glint.query.logical.expr.LiteralString;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr.Max;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr.Min;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr.Sum;
+import co.clflushopt.glint.query.logical.expr.LogicalAliasExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalBinaryExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalCastExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalColumnExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalColumnIndex;
 import co.clflushopt.glint.query.logical.expr.LogicalExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalLiteralDouble;
+import co.clflushopt.glint.query.logical.expr.LogicalLiteralLong;
+import co.clflushopt.glint.query.logical.expr.LogicalLiteralString;
 import co.clflushopt.glint.query.logical.plan.Aggregate;
+import co.clflushopt.glint.query.logical.plan.Filter;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.logical.plan.Projection;
 import co.clflushopt.glint.query.logical.plan.Scan;
-import co.clflushopt.glint.query.logical.plan.Selection;
 import co.clflushopt.glint.query.physical.expr.LiteralDoubleExpr;
 import co.clflushopt.glint.query.physical.expr.LiteralLongExpr;
 import co.clflushopt.glint.query.physical.expr.LiteralStringExpr;
@@ -61,8 +61,8 @@ public class QueryPlanner {
         if (plan instanceof Scan) {
             Scan scan = (Scan) plan;
             return new ScanOperator(scan.getDataSource(), scan.getProjections());
-        } else if (plan instanceof Selection) {
-            Selection selection = (Selection) plan;
+        } else if (plan instanceof Filter) {
+            Filter selection = (Filter) plan;
             PhysicalPlan input = createPhysicalPlan(selection.getInput());
             PhysicalExpr filterExpr = createPhysicalExpr(selection.getExpr(), selection.getInput());
             return new FilterOperator(input, filterExpr);
@@ -106,56 +106,56 @@ public class QueryPlanner {
      * Create a physical expression from a logical expression.
      */
     public static PhysicalExpr createPhysicalExpr(LogicalExpr expr, LogicalPlan input) {
-        if (expr instanceof LiteralLong) {
-            return new LiteralLongExpr(((LiteralLong) expr).getValue());
-        } else if (expr instanceof LiteralDouble) {
-            return new LiteralDoubleExpr(((LiteralDouble) expr).getValue());
-        } else if (expr instanceof LiteralString) {
-            return new LiteralStringExpr(((LiteralString) expr).getValue());
-        } else if (expr instanceof ColumnIndex) {
-            return new PhysicalColumnExpr(((ColumnIndex) expr).getIndex());
-        } else if (expr instanceof AliasExpr) {
+        if (expr instanceof LogicalLiteralLong) {
+            return new LiteralLongExpr(((LogicalLiteralLong) expr).getValue());
+        } else if (expr instanceof LogicalLiteralDouble) {
+            return new LiteralDoubleExpr(((LogicalLiteralDouble) expr).getValue());
+        } else if (expr instanceof LogicalLiteralString) {
+            return new LiteralStringExpr(((LogicalLiteralString) expr).getValue());
+        } else if (expr instanceof LogicalColumnIndex) {
+            return new PhysicalColumnExpr(((LogicalColumnIndex) expr).getIndex());
+        } else if (expr instanceof LogicalAliasExpr) {
             // note that there is no physical expression for an alias since the alias
             // only affects the name used in the planning phase and not how the aliased
             // expression is executed
-            return createPhysicalExpr(((AliasExpr) expr).getExpr(), input);
-        } else if (expr instanceof ColumnExpr) {
-            ColumnExpr column = (ColumnExpr) expr;
+            return createPhysicalExpr(((LogicalAliasExpr) expr).getExpr(), input);
+        } else if (expr instanceof LogicalColumnExpr) {
+            LogicalColumnExpr column = (LogicalColumnExpr) expr;
             int i = IntStream.range(0, input.getSchema().getFields().size()).filter(
                     idx -> input.getSchema().getFields().get(idx).name().equals(column.getName()))
                     .findFirst().getAsInt();
             return new PhysicalColumnExpr(i);
-        } else if (expr instanceof CastExpr) {
-            CastExpr cast = (CastExpr) expr;
+        } else if (expr instanceof LogicalCastExpr) {
+            LogicalCastExpr cast = (LogicalCastExpr) expr;
             return new PhysicalCastExpr(createPhysicalExpr(cast.getExpr(), input),
                     cast.getDataType());
-        } else if (expr instanceof BinaryExpr) {
-            BinaryExpr binary = (BinaryExpr) expr;
+        } else if (expr instanceof LogicalBinaryExpr) {
+            LogicalBinaryExpr binary = (LogicalBinaryExpr) expr;
             PhysicalExpr l = createPhysicalExpr(binary.getLhs(), input);
             PhysicalExpr r = createPhysicalExpr(binary.getRhs(), input);
 
-            if (binary.getOperator() == "=") {
+            if (binary.getOperator().equals("=")) {
                 return new EqExpression(l, r);
             }
-            if (binary.getOperator() == "!=") {
+            if (binary.getOperator().equals("!=")) {
                 return new NeqExpression(l, r);
             }
-            if (binary.getOperator() == ">") {
+            if (binary.getOperator().equals(">")) {
                 return new GtExpression(l, r);
             }
-            if (binary.getOperator() == ">=") {
+            if (binary.getOperator().equals(">=")) {
                 return new GteExpression(l, r);
             }
-            if (binary.getOperator() == "<") {
+            if (binary.getOperator().equals("<")) {
                 return new LtExpression(l, r);
             }
-            if (binary.getOperator() == "<=") {
+            if (binary.getOperator().equals("<=")) {
                 return new LteExpression(l, r);
             }
-            if (binary.getOperator() == "and") {
+            if (binary.getOperator().equals("and")) {
                 return new AndExpression(l, r);
             }
-            if (binary.getOperator() == "or") {
+            if (binary.getOperator().equals("or")) {
                 return new OrExpression(l, r);
             }
             throw new IllegalStateException(

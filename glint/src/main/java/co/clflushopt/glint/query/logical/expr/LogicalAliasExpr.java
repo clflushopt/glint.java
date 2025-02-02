@@ -8,11 +8,11 @@ import co.clflushopt.glint.types.Field;
  *
  * AliasExpr
  */
-public class AliasExpr implements LogicalExpr {
+public class LogicalAliasExpr implements LogicalExpr {
     private String alias;
     private LogicalExpr expr;
 
-    public AliasExpr(LogicalExpr expr, String alias) {
+    public LogicalAliasExpr(LogicalExpr expr, String alias) {
         this.expr = expr;
         this.alias = alias;
     }
@@ -27,7 +27,7 @@ public class AliasExpr implements LogicalExpr {
 
     @Override
     public Field toField(LogicalPlan plan) {
-        return new Field(expr.toField(plan).name(), expr.toField(plan).dataType());
+        return new Field(alias, expr.toField(plan).dataType());
     }
 
     @Override

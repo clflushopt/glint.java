@@ -12,9 +12,9 @@ import co.clflushopt.glint.core.CsvReaderOptions;
 import co.clflushopt.glint.core.ExecutionContext;
 import co.clflushopt.glint.core.datasets.DatasetUtils;
 import co.clflushopt.glint.dataframe.DataFrame;
-import co.clflushopt.glint.query.logical.expr.AggregateExpr;
-import co.clflushopt.glint.query.logical.expr.CastExpr;
-import co.clflushopt.glint.query.logical.expr.ColumnExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalCastExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalColumnExpr;
 import co.clflushopt.glint.query.logical.expr.LogicalExpr;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.optimizer.QueryOptimizer;
@@ -101,15 +101,15 @@ public class NYCYellowTrips {
 
     // Helper methods for creating expressions
     private static LogicalExpr col(String name) {
-        return new ColumnExpr(name);
+        return new LogicalColumnExpr(name);
     }
 
     private static LogicalExpr cast(LogicalExpr expr, ArrowType targetType) {
-        return new CastExpr(expr, targetType);
+        return new LogicalCastExpr(expr, targetType);
     }
 
-    private static AggregateExpr max(LogicalExpr expr) {
-        return new AggregateExpr.Max(expr);
+    private static LogicalAggregateExpr max(LogicalExpr expr) {
+        return new LogicalAggregateExpr.Max(expr);
     }
 
 }

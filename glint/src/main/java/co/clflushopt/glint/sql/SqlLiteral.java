@@ -4,7 +4,7 @@ package co.clflushopt.glint.sql;
  * Literals for (long, double, string datatypes).
  *
  */
-public enum Literal implements TokenType {
+public enum SqlLiteral implements TokenType {
     LONG, DOUBLE, STRING, IDENTIFIER;
 
     /**

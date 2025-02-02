@@ -2,12 +2,12 @@ package co.clflushopt.glint.dataframe;
 
 import java.util.List;
 
-import co.clflushopt.glint.query.logical.expr.AggregateExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr;
 import co.clflushopt.glint.query.logical.expr.LogicalExpr;
 import co.clflushopt.glint.query.logical.plan.Aggregate;
+import co.clflushopt.glint.query.logical.plan.Filter;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.logical.plan.Projection;
-import co.clflushopt.glint.query.logical.plan.Selection;
 import co.clflushopt.glint.types.Schema;
 
 public class DataFrameImpl implements DataFrame {
@@ -24,11 +24,12 @@ public class DataFrameImpl implements DataFrame {
 
     @Override
     public DataFrame filter(LogicalExpr expr) {
-        return new DataFrameImpl(new Selection(plan, expr));
+        return new DataFrameImpl(new Filter(plan, expr));
     }
 
     @Override
-    public DataFrame aggregate(List<LogicalExpr> groupBy, List<AggregateExpr> aggregateExpr) {
+    public DataFrame aggregate(List<LogicalExpr> groupBy,
+            List<LogicalAggregateExpr> aggregateExpr) {
         return new DataFrameImpl(new Aggregate(plan, groupBy, aggregateExpr));
     }
 

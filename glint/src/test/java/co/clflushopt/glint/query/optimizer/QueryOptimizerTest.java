@@ -13,11 +13,11 @@ import org.junit.Test;
 import co.clflushopt.glint.dataframe.DataFrame;
 import co.clflushopt.glint.dataframe.DataFrameImpl;
 import co.clflushopt.glint.datasource.CsvDataSource;
-import co.clflushopt.glint.query.logical.expr.AggregateExpr;
-import co.clflushopt.glint.query.logical.expr.BooleanExpr;
-import co.clflushopt.glint.query.logical.expr.ColumnExpr;
-import co.clflushopt.glint.query.logical.expr.LiteralString;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalBooleanExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalColumnExpr;
 import co.clflushopt.glint.query.logical.expr.LogicalExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalLiteralString;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.logical.plan.Scan;
 import co.clflushopt.glint.types.ArrowTypes;
@@ -82,26 +82,26 @@ public class QueryOptimizerTest {
 
     // Helper methods for creating expressions
     private LogicalExpr col(String name) {
-        return new ColumnExpr(name);
+        return new LogicalColumnExpr(name);
     }
 
     private LogicalExpr lit(String value) {
-        return new LiteralString(value);
+        return new LogicalLiteralString(value);
     }
 
     private LogicalExpr eq(LogicalExpr left, LogicalExpr right) {
-        return BooleanExpr.Eq(left, right);
+        return LogicalBooleanExpr.Eq(left, right);
     }
 
-    private AggregateExpr min(LogicalExpr expr) {
-        return new AggregateExpr.Min(expr);
+    private LogicalAggregateExpr min(LogicalExpr expr) {
+        return new LogicalAggregateExpr.Min(expr);
     }
 
-    private AggregateExpr max(LogicalExpr expr) {
-        return new AggregateExpr.Max(expr);
+    private LogicalAggregateExpr max(LogicalExpr expr) {
+        return new LogicalAggregateExpr.Max(expr);
     }
 
-    private AggregateExpr count(LogicalExpr expr) {
-        return new AggregateExpr.Count(expr);
+    private LogicalAggregateExpr count(LogicalExpr expr) {
+        return new LogicalAggregateExpr.Count(expr);
     }
 }

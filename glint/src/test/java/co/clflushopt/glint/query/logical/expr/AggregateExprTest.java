@@ -33,7 +33,7 @@ public class AggregateExprTest {
     @Test
     public void testSum() {
         LogicalExpr input = new MockLogicalExpr("input", new Field("input", ArrowTypes.Int64Type));
-        AggregateExpr sum = new AggregateExpr.Sum(input);
+        LogicalAggregateExpr sum = new LogicalAggregateExpr.Sum(input);
 
         assertEquals("SUM(input)", sum.toString());
         assertEquals(new Field("SUM", ArrowTypes.Int64Type), sum.toField(null));
@@ -42,7 +42,7 @@ public class AggregateExprTest {
     @Test
     public void testMin() {
         LogicalExpr input = new MockLogicalExpr("input", new Field("input", ArrowTypes.Int64Type));
-        AggregateExpr min = new AggregateExpr.Min(input);
+        LogicalAggregateExpr min = new LogicalAggregateExpr.Min(input);
 
         assertEquals("MIN(input)", min.toString());
         assertEquals(new Field("MIN", ArrowTypes.Int64Type), min.toField(null));
@@ -51,7 +51,7 @@ public class AggregateExprTest {
     @Test
     public void testMax() {
         LogicalExpr input = new MockLogicalExpr("input", new Field("input", ArrowTypes.Int64Type));
-        AggregateExpr max = new AggregateExpr.Max(input);
+        LogicalAggregateExpr max = new LogicalAggregateExpr.Max(input);
 
         assertEquals("MAX(input)", max.toString());
         assertEquals(new Field("MAX", ArrowTypes.Int64Type), max.toField(null));
@@ -60,7 +60,7 @@ public class AggregateExprTest {
     @Test
     public void testAvg() {
         LogicalExpr input = new MockLogicalExpr("input", new Field("input", ArrowTypes.Int64Type));
-        AggregateExpr avg = new AggregateExpr.Avg(input);
+        LogicalAggregateExpr avg = new LogicalAggregateExpr.Avg(input);
 
         assertEquals("AVG(input)", avg.toString());
         assertEquals(new Field("AVG", ArrowTypes.DoubleType), avg.toField(null));
@@ -69,7 +69,7 @@ public class AggregateExprTest {
     @Test
     public void testCount() {
         LogicalExpr input = new MockLogicalExpr("input", new Field("input", ArrowTypes.Int64Type));
-        AggregateExpr count = new AggregateExpr.Count(input);
+        LogicalAggregateExpr count = new LogicalAggregateExpr.Count(input);
 
         assertEquals("COUNT(input)", count.toString());
         assertEquals(new Field("COUNT", ArrowTypes.Int64Type), count.toField(null));

@@ -7,10 +7,10 @@ import co.clflushopt.glint.types.Field;
 /**
  * Logical expression representing a string literal.
  */
-public class LiteralString implements LogicalExpr {
+public class LogicalLiteralString implements LogicalExpr {
     private String literal;
 
-    public LiteralString(String literal) {
+    public LogicalLiteralString(String literal) {
         this.literal = literal;
     }
 

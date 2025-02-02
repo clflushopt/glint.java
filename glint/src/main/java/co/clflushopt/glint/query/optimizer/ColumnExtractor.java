@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import co.clflushopt.glint.query.logical.expr.AggregateExpr;
-import co.clflushopt.glint.query.logical.expr.AliasExpr;
-import co.clflushopt.glint.query.logical.expr.BinaryExpr;
-import co.clflushopt.glint.query.logical.expr.CastExpr;
-import co.clflushopt.glint.query.logical.expr.ColumnExpr;
-import co.clflushopt.glint.query.logical.expr.ColumnIndex;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalAliasExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalBinaryExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalCastExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalColumnExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalColumnIndex;
 import co.clflushopt.glint.query.logical.expr.LogicalExpr;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 
@@ -43,26 +43,26 @@ public class ColumnExtractor {
      */
     public static Set<String> extractColumns(LogicalPlan plan, LogicalExpr expression) {
         Set<String> columns = new HashSet<>();
-        if (expression instanceof ColumnExpr) {
-            columns.add(((ColumnExpr) expression).getName());
+        if (expression instanceof LogicalColumnExpr) {
+            columns.add(((LogicalColumnExpr) expression).getName());
         }
-        if (expression instanceof ColumnIndex) {
+        if (expression instanceof LogicalColumnIndex) {
             // Extract the column name using the index and the logical plan schema.
-            ColumnIndex columnIndex = (ColumnIndex) expression;
+            LogicalColumnIndex columnIndex = (LogicalColumnIndex) expression;
             columns.add(plan.getSchema().getFields().get(columnIndex.getIndex()).name());
         }
-        if (expression instanceof AggregateExpr) {
-            columns.addAll(extractColumns(plan, ((AggregateExpr) expression).getExpr()));
+        if (expression instanceof LogicalAggregateExpr) {
+            columns.addAll(extractColumns(plan, ((LogicalAggregateExpr) expression).getExpr()));
         }
-        if (expression instanceof BinaryExpr) {
-            columns.addAll(extractColumns(plan, ((BinaryExpr) expression).getLhs()));
-            columns.addAll(extractColumns(plan, ((BinaryExpr) expression).getRhs()));
+        if (expression instanceof LogicalBinaryExpr) {
+            columns.addAll(extractColumns(plan, ((LogicalBinaryExpr) expression).getLhs()));
+            columns.addAll(extractColumns(plan, ((LogicalBinaryExpr) expression).getRhs()));
         }
-        if (expression instanceof AliasExpr) {
-            columns.addAll(extractColumns(plan, ((AliasExpr) expression).getExpr()));
+        if (expression instanceof LogicalAliasExpr) {
+            columns.addAll(extractColumns(plan, ((LogicalAliasExpr) expression).getExpr()));
         }
-        if (expression instanceof CastExpr) {
-            columns.addAll(extractColumns(plan, ((CastExpr) expression).getExpr()));
+        if (expression instanceof LogicalCastExpr) {
+            columns.addAll(extractColumns(plan, ((LogicalCastExpr) expression).getExpr()));
         }
 
         return columns;

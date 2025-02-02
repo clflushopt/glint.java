@@ -33,11 +33,11 @@ public class Tokenizer {
         }
 
         char currentChar = sql.charAt(offset);
-        if (Literal.isIdentifier(currentChar)) {
+        if (SqlLiteral.isIdentifier(currentChar)) {
             var token = scanIdentifier(offset);
             offset = token.getEndOffset();
             return token;
-        } else if (Literal.isNumber(currentChar)) {
+        } else if (SqlLiteral.isNumber(currentChar)) {
             var token = scanNumber(offset);
             offset = token.getEndOffset();
             return token;
@@ -45,7 +45,7 @@ public class Tokenizer {
             var token = scanSymbol(offset);
             offset = token.getEndOffset();
             return token;
-        } else if (Literal.isCharsStart(currentChar)) {
+        } else if (SqlLiteral.isCharsStart(currentChar)) {
             var token = scanChars(offset, currentChar);
             offset = token.getEndOffset();
             return token;
@@ -68,7 +68,7 @@ public class Tokenizer {
         }
 
         if (endOffset == sql.length()) {
-            return new Token(sql.substring(startOffset, endOffset), Literal.LONG, endOffset);
+            return new Token(sql.substring(startOffset, endOffset), SqlLiteral.LONG, endOffset);
         }
 
         boolean isFloat = sql.charAt(endOffset) == '.';
@@ -77,40 +77,40 @@ public class Tokenizer {
         }
 
         return new Token(sql.substring(startOffset, endOffset),
-                isFloat ? Literal.DOUBLE : Literal.LONG, endOffset);
+                isFloat ? SqlLiteral.DOUBLE : SqlLiteral.LONG, endOffset);
     }
 
     private Token scanIdentifier(int startOffset) {
         if (sql.charAt(startOffset) == '`') {
             int endOffset = getOffsetUntilTerminatedChar('`', startOffset);
-            return new Token(sql.substring(offset, endOffset), Literal.IDENTIFIER, endOffset);
+            return new Token(sql.substring(offset, endOffset), SqlLiteral.IDENTIFIER, endOffset);
         }
 
-        int endOffset = indexOfFirst(startOffset, ch -> !Literal.isIdentifierPart(ch));
+        int endOffset = indexOfFirst(startOffset, ch -> !SqlLiteral.isIdentifierPart(ch));
         String text = sql.substring(startOffset, endOffset);
 
         if (isAmbiguousIdentifier(text)) {
             return new Token(text, processAmbiguousIdentifier(endOffset, text), endOffset);
         } else {
-            TokenType tokenType = Keyword.textOf(text) != null ? Keyword.textOf(text)
-                    : Literal.IDENTIFIER;
+            TokenType tokenType = SqlKeyword.textOf(text) != null ? SqlKeyword.textOf(text)
+                    : SqlLiteral.IDENTIFIER;
             return new Token(text, tokenType, endOffset);
         }
     }
 
     private boolean isAmbiguousIdentifier(String text) {
-        return Keyword.ORDER.name().equalsIgnoreCase(text)
-                || Keyword.GROUP.name().equalsIgnoreCase(text);
+        return SqlKeyword.ORDER.name().equalsIgnoreCase(text)
+                || SqlKeyword.GROUP.name().equalsIgnoreCase(text);
     }
 
     private TokenType processAmbiguousIdentifier(int startOffset, String text) {
         int skipWhitespaceOffset = skipWhitespace(startOffset);
         if (skipWhitespaceOffset != sql.length()
                 && sql.substring(skipWhitespaceOffset, skipWhitespaceOffset + 2)
-                        .equalsIgnoreCase(Keyword.BY.name())) {
-            return Keyword.textOf(text);
+                        .equalsIgnoreCase(SqlKeyword.BY.name())) {
+            return SqlKeyword.textOf(text);
         }
-        return Literal.IDENTIFIER;
+        return SqlLiteral.IDENTIFIER;
     }
 
     private int getOffsetUntilTerminatedChar(char terminatedChar, int startOffset) {
@@ -136,7 +136,8 @@ public class Tokenizer {
 
     private Token scanChars(int startOffset, char terminatedChar) {
         int endOffset = getOffsetUntilTerminatedChar(terminatedChar, startOffset);
-        return new Token(sql.substring(startOffset + 1, endOffset), Literal.STRING, endOffset + 1);
+        return new Token(sql.substring(startOffset + 1, endOffset), SqlLiteral.STRING,
+                endOffset + 1);
     }
 
     private int indexOfFirst(int startIndex, Predicate<Character> predicate) {

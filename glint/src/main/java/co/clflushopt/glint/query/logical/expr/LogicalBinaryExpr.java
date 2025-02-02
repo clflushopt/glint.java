@@ -1,12 +1,12 @@
 package co.clflushopt.glint.query.logical.expr;
 
-public abstract class BinaryExpr {
+public abstract class LogicalBinaryExpr {
     private String name;
     private String operator;
     private LogicalExpr lhs;
     private LogicalExpr rhs;
 
-    public BinaryExpr(String name, String operator, LogicalExpr lhs, LogicalExpr rhs) {
+    public LogicalBinaryExpr(String name, String operator, LogicalExpr lhs, LogicalExpr rhs) {
         this.name = name;
         this.operator = operator;
         this.lhs = lhs;

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import co.clflushopt.glint.query.logical.expr.AggregateExpr;
+import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr;
 import co.clflushopt.glint.query.logical.expr.LogicalExpr;
 import co.clflushopt.glint.types.Schema;
 
@@ -17,9 +17,10 @@ import co.clflushopt.glint.types.Schema;
 public class Aggregate implements LogicalPlan {
     private LogicalPlan input;
     private List<LogicalExpr> groupExpr;
-    private List<AggregateExpr> aggregateExpr;
+    private List<LogicalAggregateExpr> aggregateExpr;
 
-    public Aggregate(LogicalPlan input, List<LogicalExpr> groupBy, List<AggregateExpr> aggregates) {
+    public Aggregate(LogicalPlan input, List<LogicalExpr> groupBy,
+            List<LogicalAggregateExpr> aggregates) {
         this.input = input;
         this.groupExpr = groupBy;
         this.aggregateExpr = aggregates;
@@ -29,7 +30,7 @@ public class Aggregate implements LogicalPlan {
         return groupExpr;
     }
 
-    public List<AggregateExpr> getAggregateExpr() {
+    public List<LogicalAggregateExpr> getAggregateExpr() {
         return aggregateExpr;
     }
 

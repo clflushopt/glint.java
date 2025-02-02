@@ -7,10 +7,10 @@ import co.clflushopt.glint.types.Field;
 /**
  * Logical expression representing a Long literal.
  */
-public class LiteralLong implements LogicalExpr {
+public class LogicalLiteralLong implements LogicalExpr {
     private Long value;
 
-    public LiteralLong(Long value) {
+    public LogicalLiteralLong(Long value) {
         this.value = value;
     }
 

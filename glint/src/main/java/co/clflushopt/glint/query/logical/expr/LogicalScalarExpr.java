@@ -12,15 +12,19 @@ import co.clflushopt.glint.types.Field;
  *
  * ScalarExpr
  */
-public class ScalarExpr implements LogicalExpr {
+public class LogicalScalarExpr implements LogicalExpr {
     private String name;
     private List<LogicalExpr> args;
     private ArrowType returnType;
 
-    public ScalarExpr(String name, List<LogicalExpr> args, ArrowType returnType) {
+    public LogicalScalarExpr(String name, List<LogicalExpr> args, ArrowType returnType) {
         this.name = name;
         this.args = args;
         this.returnType = returnType;
+    }
+
+    public List<LogicalExpr> getArgs() {
+        return args;
     }
 
     @Override
