@@ -98,4 +98,8 @@ TODO
 ### Datasets ###
 datasets/
 
+### Python Environment ###
+env/
+.venv/
+
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,visualstudiocode,gradle

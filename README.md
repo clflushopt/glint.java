@@ -134,3 +134,46 @@ queries.
   - Processes data in batches for efficiency
   - Supports push-down optimizations
   - Implements memory-efficient operations
+
+  ### Running the examples
+
+You will probably want to use an IDE like IntelliJ or what I personally recommend VSCode with the
+Java pack at least for working with the codebase but you are free to use ed or nano as well.
+
+Running this thing will require Maven for no other reason than trying to run it without Maven
+has made me realize this will be the last and only time I write Java as a hobby or professionaly.
+
+If you don't want Maven; you should be able to figure it out.
+
+```sh
+
+$ export JDK_JAVA_OPTIONS="--add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED"
+$ export MAVEN_OPTS="--add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED"
+
+$ mvn compile exec:java --file glint/pom.xml
+```
+
+```
+Schema [fields=[(name: passenger_count, type: Int(32, true)), (name: MAX, type: FloatingPoint(SINGLE))]]
+
+Logical Plan:   Aggregate: groupExpr=[#passenger_count], aggregateExpr=[MAX(CAST(#fare_amount AS FLOAT))]
+    Scan: parquet_scan [projection=None]
+Optimized Plan: Aggregate: groupExpr=[#passenger_count], aggregateExpr=[MAX(CAST(#fare_amount AS FLOAT))]
+      Scan: parquet_scan [projection=None]
+
+Results:
+
+0,36090.3
+1,623259.9
+2,492.5
+3,350.0
+4,500.0
+5,760.0
+6,262.5
+7,78.0
+8,87.0
+9,92.0
+null,103.2
+
+Query took 2758 ms
+```

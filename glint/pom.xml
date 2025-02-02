@@ -33,12 +33,17 @@
   <dependency>
       <groupId>org.apache.arrow</groupId>
       <artifactId>arrow-vector</artifactId>
-      <version>9.0.0</version>
+      <version>18.0.0</version>
   </dependency>
   <dependency>
       <groupId>org.apache.arrow</groupId>
       <artifactId>arrow-memory-netty</artifactId>
-      <version>9.0.0</version>
+      <version>18.0.0</version>
+  </dependency>
+  <dependency>
+      <groupId>org.apache.arrow</groupId>
+      <artifactId>arrow-dataset</artifactId>
+      <version>18.0.0</version>
   </dependency>
   <dependency>
     <groupId>com.google.protobuf</groupId>
@@ -144,6 +149,18 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.5.0</version>
+            <configuration>
+                <mainClass>co.clflushopt.glint.App</mainClass>
+                <arguments>
+                  <argument>--add-opens</argument>
+                  <argument>java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED</argument>
+                </arguments>
+            </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

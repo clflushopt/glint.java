@@ -9,6 +9,7 @@ import java.util.Optional;
 import co.clflushopt.glint.dataframe.DataFrame;
 import co.clflushopt.glint.dataframe.DataFrameImpl;
 import co.clflushopt.glint.datasource.CsvDataSource;
+import co.clflushopt.glint.datasource.DataSource;
 import co.clflushopt.glint.datasource.ParquetDataSource;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.logical.plan.Scan;
@@ -109,7 +110,12 @@ public class ExecutionContext {
      * @param df
      */
     public DataFrame readParquet(String path, Optional<Schema> schema) {
-        var source = new ParquetDataSource(path);
+        DataSource source;
+        if (schema.isPresent()) {
+            source = new ParquetDataSource(path, schema.get());
+        } else {
+            source = new ParquetDataSource(path);
+        }
         return new DataFrameImpl(new Scan("parquet_scan", source, Collections.emptyList()));
     }
 
