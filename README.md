@@ -1,16 +1,11 @@
-# Glint: Vectorized and Code Generation Driven Query Engine in Java
-
-> Briefly flashing the powers of query compilation without the machinery of a spark.
+# Glint: Vectorized and Data Driven Code Generation Query Engine in Java
 
 ## Description
 
-Glint is a minimal SQL query engine with vectorized and query compilation support in Java.
+Glint is a minimal SQL query engine written in Java, it currently supports
+vectorized execution and we plan to add further support for code generation.
 
-Following in the tradition of the new movement of modular database architectures
-Glint has no catalog or data management; its only capability is turning SQL queries
-into Java code that is then compiled and executed; think Calcite not Spark.
-
-In order to make it fun, at least for tests and benchmark purposes, we did plug
+In order to make it fun, at least for tests and benchmarking purposes, we did plug
 an Arrow compatible API with support for Memory, CSV and Parquet data sources.
 
 ## Architecture
@@ -54,7 +49,7 @@ Data Chunk (e.g., 1024 rows)
     └─────────────────────┘      vectors)      vectors)
 ```
 
-Compiled execution, which our engine uses, takes a different approach by generating specialized
+Compiled execution, which we want to implement, takes a different approach by generating specialized
 code for each query. Instead of interpreting a query plan, it produces native code that directly
 implements the query logic.
 
@@ -135,7 +130,12 @@ queries.
   - Supports push-down optimizations
   - Implements memory-efficient operations
 
-  ### Running the examples
+- Query Compilation (not yet supported):
+  - Build a contextual code generator.
+  - Implement push-down optimizations at the code generation level.
+  - Add support for compiling currently existing logical plans.
+
+### Running the examples
 
 You will probably want to use an IDE like IntelliJ or what I personally recommend VSCode with the
 Java pack at least for working with the codebase but you are free to use ed or nano as well.
