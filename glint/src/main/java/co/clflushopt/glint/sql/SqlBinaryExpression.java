@@ -31,7 +31,7 @@ public class SqlBinaryExpression implements SqlExpression {
 
     @Override
     public String toString() {
-        return left + " " + operator + " " + right;
+        return "(" + left + " " + operator + " " + right + ")";
     }
 
     @Override

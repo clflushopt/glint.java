@@ -10,7 +10,7 @@ import org.junit.Test;
 public class TokenizerTest {
 
     @Test
-    public void testTokenizeSimpleSelect() {
+    public void canTokenizeSimpleSelect() {
         List<Token> expected = Arrays.asList(new Token("SELECT", Keyword.SELECT, 6),
                 new Token("id", Literal.IDENTIFIER, 9), new Token(",", Symbol.COMMA, 10),
                 new Token("first_name", Literal.IDENTIFIER, 21), new Token(",", Symbol.COMMA, 22),
@@ -24,7 +24,7 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testProjectionWithBinaryExpression() {
+    public void canTokenizeProjectionWithBinaryExpression() {
         List<Token> expected = Arrays.asList(new Token("SELECT", Keyword.SELECT, 6),
                 new Token("salary", Literal.IDENTIFIER, 13), new Token("*", Symbol.STAR, 15),
                 new Token("0.1", Literal.DOUBLE, 19), new Token("FROM", Keyword.FROM, 24),
@@ -51,7 +51,7 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testTokenizeSelectWithWhere() {
+    public void canTokenizeSelectWithWhere() {
         List<Token> expected = Arrays.asList(new Token("SELECT", Keyword.SELECT, 6),
                 new Token("a", Literal.IDENTIFIER, 8), new Token(",", Symbol.COMMA, 9),
                 new Token("b", Literal.IDENTIFIER, 11), new Token("FROM", Keyword.FROM, 16),
@@ -66,7 +66,7 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testTokenizeSelectWithAggregates() {
+    public void canTokenizeSelectWithAggregates() {
         List<Token> expected = Arrays.asList(new Token("SELECT", Keyword.SELECT, 6),
                 new Token("state", Literal.IDENTIFIER, 12), new Token(",", Symbol.COMMA, 13),
                 new Token("MAX", Keyword.MAX, 17), new Token("(", Symbol.LEFT_PAREN, 18),
@@ -82,7 +82,7 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testTokenizeSelectWithAggregatesAndHaving() {
+    public void canTokenizeSelectWithAggregatesAndHaving() {
         List<Token> expected = Arrays.asList(new Token("SELECT", Keyword.SELECT, 6),
                 new Token("state", Literal.IDENTIFIER, 12), new Token(",", Symbol.COMMA, 13),
                 new Token("MAX", Keyword.MAX, 17), new Token("(", Symbol.LEFT_PAREN, 18),
@@ -102,7 +102,7 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testTokenizeCompoundOperators() {
+    public void canTokenizeCompoundOperators() {
         List<Token> expected = Arrays.asList(new Token("a", Literal.IDENTIFIER, 1),
                 new Token(">=", Symbol.GT_EQ, 4), new Token("b", Literal.IDENTIFIER, 6),
                 new Token("OR", Keyword.OR, 9), new Token("a", Literal.IDENTIFIER, 11),
@@ -119,7 +119,7 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testTokenizeLongValues() {
+    public void canTokenizeLongValues() {
         List<Token> expected = Arrays.asList(new Token("123456789", Literal.LONG, 9),
                 new Token("+", Symbol.PLUS, 11), new Token("987654321", Literal.LONG, 21));
 
@@ -129,7 +129,7 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testTokenizeFloatDoubleValues() {
+    public void canTokenizeFloatDoubleValues() {
         List<Token> expected = Arrays.asList(new Token("123456789.00", Literal.DOUBLE, 12),
                 new Token("+", Symbol.PLUS, 14), new Token("987654321.001", Literal.DOUBLE, 28));
 
@@ -139,7 +139,7 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testTokenizeTableGroup() {
+    public void canTokenizeTableGroup() {
         List<Token> expected = Arrays.asList(new Token("select", Keyword.SELECT, 6),
                 new Token("*", Symbol.STAR, 8), new Token("from", Keyword.FROM, 13),
                 new Token("group", Literal.IDENTIFIER, 19));

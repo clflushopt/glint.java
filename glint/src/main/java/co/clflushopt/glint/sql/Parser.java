@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Parser {
@@ -13,6 +14,11 @@ public class Parser {
 
     public Parser(TokenStream tokens) {
         this.tokens = tokens;
+        logger.setLevel(Level.FINE);
+    }
+
+    public SqlExpression parse() {
+        return parse(0);
     }
 
     public int nextPrecedence() {
@@ -253,7 +259,7 @@ public class Parser {
         }
 
         while (precedence < nextPrecedence()) {
-            left = parseInfix(left, precedence);
+            left = parseInfix(left, nextPrecedence());
         }
 
         return left;
