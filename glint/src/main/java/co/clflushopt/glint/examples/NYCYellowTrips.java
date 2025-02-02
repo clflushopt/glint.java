@@ -9,8 +9,8 @@ import java.util.Optional;
 import org.apache.arrow.vector.types.pojo.ArrowType;
 
 import co.clflushopt.glint.core.CsvReaderOptions;
+import co.clflushopt.glint.core.DatasetUtils;
 import co.clflushopt.glint.core.ExecutionContext;
-import co.clflushopt.glint.core.datasets.DatasetUtils;
 import co.clflushopt.glint.dataframe.DataFrame;
 import co.clflushopt.glint.query.logical.expr.LogicalAggregateExpr;
 import co.clflushopt.glint.query.logical.expr.LogicalCastExpr;

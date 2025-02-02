@@ -1,4 +1,4 @@
-package co.clflushopt.glint.core.datasets;
+package co.clflushopt.glint.core;
 
 import java.util.Arrays;
 
