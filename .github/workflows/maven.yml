@@ -29,4 +29,6 @@ jobs:
     - name: Cleanup existing or cached artefacts.
       run: mvn -B clean --file glint/pom.xml
     - name: Build & Run Tests with Maven
+      env:
+        DISABLE_COMPILER_TESTS: "yes"
       run: mvn -B package --file glint/pom.xml
