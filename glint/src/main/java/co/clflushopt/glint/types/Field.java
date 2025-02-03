@@ -12,7 +12,7 @@ public record Field(String name, ArrowType dataType) {
 
     /**
      * Transform an internal `Field` type to Arrow Field type.
-     * 
+     *
      * @return
      */
     public org.apache.arrow.vector.types.pojo.Field toArrow() {

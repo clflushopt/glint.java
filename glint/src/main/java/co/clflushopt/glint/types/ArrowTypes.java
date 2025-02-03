@@ -50,4 +50,22 @@ public final class ArrowTypes {
                 return dataType.accept(new PrettyArrowTypeVisitor());
         }
 
+        /**
+         * Compiled representation of a reference to a wrapped arrow type.
+         *
+         */
+        public static String compile(ArrowType type) {
+                switch (type.getTypeID()) {
+                case Bool:
+                        return "ArrowTypes.BooleanType";
+                case Int:
+                        return "ArrowTypes.Int64Type";
+                case FloatingPoint:
+                        return "ArrowTypes.DoubleType";
+                default:
+                        break;
+                }
+                return "ArrowTypes.StringType";
+        }
+
 }

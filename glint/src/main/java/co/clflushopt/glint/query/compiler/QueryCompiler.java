@@ -8,8 +8,11 @@ import java.util.stream.Collectors;
 import org.codehaus.commons.compiler.ISimpleCompiler;
 import org.codehaus.janino.CompilerFactory;
 
+import co.clflushopt.glint.query.logical.expr.LogicalColumnExpr;
 import co.clflushopt.glint.query.logical.plan.LogicalPlan;
 import co.clflushopt.glint.query.logical.plan.Scan;
+import co.clflushopt.glint.types.ArrowTypes;
+import co.clflushopt.glint.types.Field;
 
 /**
  * Core Query Compiler using Janino for runtime code generation. This class
@@ -113,30 +116,48 @@ public class QueryCompiler {
     }
 
     /**
-     * Generates source code for a given logical plan.
+     * Compile a logical plan to Java code.
      *
      * @param logicalPlan The logical plan to generate code for
      * @return Generated Java source code as a string
      */
     private String generateSourceCode(LogicalPlan logicalPlan) {
+        return String.format("""
+                package co.clflushopt.glint.generated;
+
+                import co.clflushopt.glint.query.logical.plan.LogicalPlan;
+                import co.clflushopt.glint.query.logical.plan.Scan;
+                import co.clflushopt.glint.query.logical.plan.Filter;
+                import co.clflushopt.glint.datasource.DataSource;
+                import co.clflushopt.glint.types.RecordBatch;
+                import co.clflushopt.glint.types.Schema;
+                import co.clflushopt.glint.types.RecordBatch;
+                import co.clflushopt.glint.types.ArrowTypes;
+
+                import java.util.List;
+
+                %s
+                """, compileScanPlan(logicalPlan));
+    }
+
+    /**
+     * Compile scan operator.
+     *
+     *
+     * @param expr
+     * @param plan
+     * @return
+     */
+    private String compileScanPlan(LogicalPlan plan) {
         return String.format(
                 """
-                        package co.clflushopt.glint.generated;
-
-                        import co.clflushopt.glint.query.logical.plan.LogicalPlan;
-                        import co.clflushopt.glint.query.logical.plan.Scan;
-                        import co.clflushopt.glint.datasource.DataSource;
-                        import co.clflushopt.glint.types.RecordBatch;
-                        import co.clflushopt.glint.types.Schema;
-                        import java.util.List;
-
                         public class LogicalPlanExecutor {
                             public long execute() {
                                 return executePlan(%s);
                             }
 
                             private long executePlan(LogicalPlan plan) {
-                                // Handle different logical plan types
+                                // TODO: Handle different logical plan types
                                 if (plan instanceof Scan) {
                                     Scan scan = (Scan) plan;
                                     return executeScan(scan);
@@ -154,14 +175,71 @@ public class QueryCompiler {
                                 for (RecordBatch batch : dataSource.scan(projections)) {
                                     totalRecords += batch.getRowCount();
                                     System.out.println("Scan batch size: " + batch.getRowCount() +
-                                                       " Path: " + scan.getPath());
+                                                        " Path: " + scan.getPath());
                                 }
 
                                 return totalRecords;
                             }
+                                        }""",
+                generatePlanArgument(plan));
+
+    }
+
+    /**
+     * Generates source code specifically for column expressions.
+     *
+     * @param columnExpr The column expression to generate code for
+     * @param plan       The logical plan context
+     * @return Generated Java source code for the column expression
+     */
+    private String compileColumnExpr(LogicalColumnExpr columnExpr, LogicalPlan plan) {
+        // Retrieve the field information for the column
+        Field field = columnExpr.toField(plan);
+
+        return String.format(
+                """
+                        public class ExpressionExecutor {
+                            // Add method to find column index
+                            private int findColumnIndex(RecordBatch batch) {
+                                Schema schema = batch.getSchema();
+                                return IntStream.range(0, schema.getFields().size())
+                                    .filter(idx -> schema.getFields().get(idx).name().equals(columnExpr.getName()))
+                                    .findFirst()
+                                    .orElseThrow(() -> new IllegalArgumentException("Column '" + columnExpr.getName() + "' not found in schema"));
+                            }
+                            /**
+                             * Extracts the value of the column '%s' from a record batch.
+                             *
+                             * @param batch The record batch to extract the value from
+                             * @param rowIndex The index of the row to extract
+                             * @return The value of the column
+                             */
+                            public Object getValue(RecordBatch batch, int rowIndex) {
+                                int columnIndex = findColumnIndex(batch);
+                                return batch.getField(rowIndex);
+                            }
+
+                            /**
+                             * Gets the field metadata for the column.
+                             *
+                             * @return Field metadata
+                             */
+                            public Field getFieldMetadata() {
+                                return new Field("%s", %s);
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "%s";
+                            }
                         }
                         """,
-                generatePlanArgument(logicalPlan));
+                columnExpr.getName(), // Column name for comments
+                columnExpr.getName(), // Method to get column value
+                columnExpr.getName(), // Field name
+                ArrowTypes.compile(field.dataType()), // Field type
+                columnExpr.toString() // String representation
+        );
     }
 
     /**
