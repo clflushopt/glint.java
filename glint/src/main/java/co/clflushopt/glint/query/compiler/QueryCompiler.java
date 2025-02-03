@@ -91,7 +91,7 @@ public class QueryCompiler {
      */
     public Object compile(LogicalPlan logicalPlan) throws Exception {
         // Generate source code for the entire logical plan
-        String sourceCode = generateSourceCode(logicalPlan);
+        String sourceCode = compileLogicalPlan(logicalPlan);
 
         // Create a new simple compiler
         ISimpleCompiler compiler = compilerFactory.newSimpleCompiler();
@@ -121,7 +121,7 @@ public class QueryCompiler {
      * @param logicalPlan The logical plan to generate code for
      * @return Generated Java source code as a string
      */
-    private String generateSourceCode(LogicalPlan logicalPlan) {
+    private String compileLogicalPlan(LogicalPlan logicalPlan) {
         return String.format("""
                 package co.clflushopt.glint.generated;
 
@@ -180,7 +180,7 @@ public class QueryCompiler {
 
                                 return totalRecords;
                             }
-                                        }""",
+                        }""",
                 generatePlanArgument(plan));
 
     }
@@ -233,7 +233,7 @@ public class QueryCompiler {
                                 return "%s";
                             }
                         }
-                        """,
+                            """,
                 columnExpr.getName(), // Column name for comments
                 columnExpr.getName(), // Method to get column value
                 columnExpr.getName(), // Field name
