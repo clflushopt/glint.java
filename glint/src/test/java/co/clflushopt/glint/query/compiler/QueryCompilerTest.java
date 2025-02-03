@@ -15,7 +15,7 @@ public class QueryCompilerTest {
     @Test
     public void canCompileInlinedParquetScan() throws Exception {
         Assume.assumeTrue("Skipping test due to missing data",
-                System.getenv("DISABLE_COMPILER_TESTS") != null);
+                System.getenv("DISABLE_COMPILER_TESTS") == null);
 
         Path path = Path.of("../datasets/yellow_tripdata_2019-01.parquet");
         String filename = path.toAbsolutePath().toString();
@@ -27,7 +27,7 @@ public class QueryCompilerTest {
     @Test
     public void canCompileScanPlan() throws Exception {
         Assume.assumeTrue("Skipping test due to missing data",
-                System.getenv("DISABLE_COMPILER_TESTS") != null);
+                System.getenv("DISABLE_COMPILER_TESTS") == null);
         try {
             Path path = Path.of("../datasets/yellow_tripdata_2019-01.parquet");
             String filename = path.toAbsolutePath().toString();
