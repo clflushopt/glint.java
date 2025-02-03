@@ -36,7 +36,7 @@ public class RecordBatch {
      *
      * @return `int`.
      */
-    public int getRowSize() {
+    public int getRowCount() {
         return fields.getFirst().getSize();
     }
 
@@ -45,7 +45,7 @@ public class RecordBatch {
      *
      * @return `int`.
      */
-    public int getColumnSize() {
+    public int getColumnCount() {
         return fields.size();
     }
 
@@ -64,10 +64,10 @@ public class RecordBatch {
      */
     public String toCsv() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < getRowSize(); i++) {
-            for (int j = 0; j < getColumnSize(); j++) {
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(); j++) {
                 sb.append(getField(j).getValue(i));
-                if (j < getColumnSize() - 1) {
+                if (j < getColumnCount() - 1) {
                     sb.append(",");
                 }
             }

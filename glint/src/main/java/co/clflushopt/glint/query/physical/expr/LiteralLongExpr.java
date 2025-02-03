@@ -19,7 +19,7 @@ public class LiteralLongExpr implements PhysicalExpr {
 
     @Override
     public ColumnVector eval(RecordBatch input) {
-        return new LiteralValueVector(ArrowTypes.Int64Type, value, input.getRowSize());
+        return new LiteralValueVector(ArrowTypes.Int64Type, value, input.getRowCount());
     }
 
 }

@@ -37,7 +37,7 @@ public class FilterOperatorTest {
         // Verify results
         assertTrue(result.hasNext());
         RecordBatch batch = result.next();
-        assertEquals(1, batch.getRowSize());
+        assertEquals(1, batch.getRowCount());
         assertEquals("Charlie", batch.getField(1).getValue(0));
         assertEquals(35, Integer.parseInt((String) batch.getField(2).getValue(0)));
     }

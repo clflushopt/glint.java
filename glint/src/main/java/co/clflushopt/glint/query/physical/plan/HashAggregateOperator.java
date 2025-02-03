@@ -69,7 +69,7 @@ public class HashAggregateOperator implements PhysicalPlan {
                     .map(expr -> expr.getInputExpr().eval(batch)).collect(Collectors.toList());
 
             // Process each row in the batch
-            for (int rowIndex = 0; rowIndex < batch.getRowSize(); rowIndex++) {
+            for (int rowIndex = 0; rowIndex < batch.getRowCount(); rowIndex++) {
                 // Create final variable for lambda.
                 final int currentRow = rowIndex;
                 // Create key for hash map

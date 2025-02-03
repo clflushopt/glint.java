@@ -34,7 +34,7 @@ public class ScanOperatorTest {
         assertTrue(result.hasNext());
         RecordBatch batch = result.next();
         assertEquals(3, batch.getSchema().getFields().size());
-        assertEquals(3, batch.getRowSize());
+        assertEquals(3, batch.getRowCount());
         assertEquals("Alice", batch.getField(1).getValue(0));
         assertFalse(result.hasNext());
     }
@@ -58,7 +58,7 @@ public class ScanOperatorTest {
         assertEquals(3, batch.getSchema().getFields().size());
         assertEquals("id", batch.getSchema().getFields().get(0).name());
         assertEquals("name", batch.getSchema().getFields().get(1).name());
-        assertEquals(3, batch.getRowSize());
+        assertEquals(3, batch.getRowCount());
         assertEquals(Integer.valueOf(1), batch.getField(0).getValue(0));
         assertEquals(25, batch.getField(2).getValue(0));
         assertFalse(result.hasNext());

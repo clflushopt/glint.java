@@ -133,7 +133,7 @@ public class CsvDataSourceTest {
         // First batch should contain first two rows
         assertTrue("Should have first batch", batchIterator.hasNext());
         RecordBatch batch1 = batchIterator.next();
-        assertEquals("First batch should have 2 rows", 2, batch1.getRowSize());
+        assertEquals("First batch should have 2 rows", 2, batch1.getRowCount());
 
         // Verify first row
         assertEquals(1L, getLongValue(batch1, "id", 0));
@@ -154,7 +154,7 @@ public class CsvDataSourceTest {
         // Second batch should contain remaining two rows
         assertTrue("Should have second batch", batchIterator.hasNext());
         RecordBatch batch2 = batchIterator.next();
-        assertEquals("Second batch should have 2 rows", 2, batch2.getRowSize());
+        assertEquals("Second batch should have 2 rows", 2, batch2.getRowCount());
 
         // Verify third row
         assertEquals(3L, getLongValue(batch2, "id", 0));

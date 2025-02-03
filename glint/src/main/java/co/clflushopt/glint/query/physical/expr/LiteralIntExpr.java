@@ -19,7 +19,7 @@ public class LiteralIntExpr implements PhysicalExpr {
 
     @Override
     public ColumnVector eval(RecordBatch input) {
-        return new LiteralValueVector(ArrowTypes.Int32Type, value, input.getRowSize());
+        return new LiteralValueVector(ArrowTypes.Int32Type, value, input.getRowCount());
     }
 
 }

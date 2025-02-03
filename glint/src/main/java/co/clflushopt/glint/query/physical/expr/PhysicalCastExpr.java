@@ -36,7 +36,7 @@ public class PhysicalCastExpr implements PhysicalExpr {
     @Override
     public ColumnVector eval(RecordBatch input) {
         ColumnVector value = expression.eval(input);
-        FieldVector fieldVector = FieldVectorFactory.create(type, input.getRowSize());
+        FieldVector fieldVector = FieldVectorFactory.create(type, input.getRowCount());
         ArrowVectorBuilder builder = new ArrowVectorBuilder(fieldVector);
 
         if (type.equals(ArrowTypes.Int8Type)) {
