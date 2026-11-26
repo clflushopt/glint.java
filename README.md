@@ -130,10 +130,10 @@ queries.
   - Supports push-down optimizations
   - Implements memory-efficient operations
 
-- Query Compilation (not yet supported):
-  - Build a contextual code generator.
-  - Implement push-down optimizations at the code generation level.
-  - Add support for compiling currently existing logical plans.
+- Query Compilation:
+  - Data-centric contextual code generator.
+  - Operator fusion (in progress).
+  - Compiles down to Java code.
 
 ### Running the examples
 
